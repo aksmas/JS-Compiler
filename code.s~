@@ -1,0 +1,14 @@
+
+main:
+
+ pushl %ebp
+ movl %esp, %ebp
+ movl $1, %eax
+ cdq
+ movl $2, %ebx
+ idivl %ebx
+ movl %eax, -8(%ebp)
+ movl %ebp, %esp
+ popl %ebp
+ ret
+

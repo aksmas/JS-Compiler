@@ -1,0 +1,3686 @@
+Terminals unused in grammar
+
+   BOOL_ARRAY
+   KEYWORD_IN
+   REAL
+   BITWISE_OR
+   BITWISE_AND
+   BITWISE_XOR
+   BITWISE_LSHIFT
+   BITWISE_RSHIFT
+   BITWISE_NOT
+   INCREMENT_BY
+   DECREMENT_BY
+   MULTIPLY_BY
+   DIVIDE_BY
+   MODULO_BY
+   AND_ASSIGN
+   OR_ASSIGN
+   XOR_ASSIGN
+   LSHIFT_ASSIGN
+   RSHIFT_ASSIGN
+   KEYWORD_THIS
+   KEYWORD_NEW
+   KEYWORD_DELETE
+   KEYWORD_NULL
+   NO_ELSE
+
+
+State 119 conflicts: 1 shift/reduce
+
+
+Grammar
+
+    0 $accept: Start $end
+
+    1 $@1: /* empty */
+
+    2 Start: $@1 Program
+
+    3 Program: /* empty */
+    4        | Element Program
+
+    5 $@2: /* empty */
+
+    6 Element: KEYWORD_FUNCTION IDENTIFIER $@2 '(' ParametersOption ')' CompoundStatement
+    7        | Statement
+
+    8 ParametersOption: /* empty */
+    9                 | Parameters
+
+   10 Parameters: KEYWORD_VAR IDENTIFIER '@' Type
+   11           | Parameters ',' KEYWORD_VAR IDENTIFIER '@' Type
+
+   12 Type: KEYWORD_INT
+   13     | KEYWORD_CHAR
+   14     | KEYWORD_FLOAT
+   15     | KEYWORD_STRING
+   16     | KEYWORD_BOOL
+   17     | INT_ARRAY
+   18     | CHAR_ARRAY
+   19     | FLOAT_ARRAY
+   20     | STRING_ARRAY
+
+   21 Statements: Statement M Statements
+   22           | Statement
+
+   23 Statement: CompoundStatement
+   24          | DeclarationStatement
+   25          | AssignmentStatement ';'
+   26          | JumpStatement
+   27          | ConditionStatement
+   28          | LoopStatement
+   29          | PrintStatement
+   30          | ScanStatement
+
+   31 CompoundStatement: BLOCK_BEGIN Statements M BLOCK_END
+
+   32 DeclarationStatement: KEYWORD_VAR DecList IDENTIFIER '@' Type Assign ';'
+
+   33 DecList: /* empty */
+   34        | DecList IDENTIFIER '@' Type Assign ','
+
+   35 Assign: /* empty */
+   36       | '=' Expression
+
+   37 AssignmentStatement: IDENTIFIER '=' Expression
+   38                    | IDENTIFIER '=' IDENTIFIER '[' Expression ']'
+   39                    | IDENTIFIER '[' Expression ']' '=' Expression
+   40                    | IDENTIFIER '=' Expression '?' Expression ':' Expression
+   41                    | IDENTIFIER INCREMENT
+   42                    | IDENTIFIER DECREMENT
+
+   43 JumpStatement: KEYWORD_CONTINUE ';'
+   44              | KEYWORD_BREAK ';'
+   45              | KEYWORD_RETURN ';'
+   46              | KEYWORD_RETURN Expression ';'
+
+   47 ConditionStatement: KEYWORD_IF Expression M Statement
+
+   48 $@3: /* empty */
+
+   49 ConditionStatement: KEYWORD_IF Expression M Statement KEYWORD_ELSE $@3 M Statement
+
+   50 $@4: /* empty */
+
+   51 ConditionStatement: KEYWORD_SWITCH Expression BLOCK_BEGIN $@4 Cases BLOCK_END
+
+   52 $@5: /* empty */
+
+   53 Cases: Cases KEYWORD_CASE Expression ':' $@5 Statements
+
+   54 $@6: /* empty */
+
+   55 Cases: KEYWORD_CASE Expression ':' $@6 Statements
+
+   56 $@7: /* empty */
+
+   57 Cases: Cases KEYWORD_DEFAULT ':' $@7 Statements
+
+   58 LoopStatement: KEYWORD_WHILE M Expression M Statement
+   59              | KEYWORD_DO M Statement KEYWORD_WHILE M Expression ';'
+   60              | KEYWORD_FOR '(' AssignmentStatement ';' M Expression ';' M IDENTIFIER INCREMENT ')' Statement
+   61              | KEYWORD_FOR '(' AssignmentStatement ';' M Expression ';' M IDENTIFIER DECREMENT ')' Statement
+
+   62 PrintStatement: KEYWORD_PRINT '(' Expression ')' ';'
+   63               | KEYWORD_PRINT '(' IDENTIFIER '[' Expression ']' ')' ';'
+
+   64 ScanStatement: KEYWORD_SCAN '(' Expression ')' ';'
+   65              | KEYWORD_SCAN '(' IDENTIFIER '[' Expression ']' ')' ';'
+
+   66 Expression: '(' Expression ')'
+   67           | Expression '+' Expression
+   68           | Expression '*' Expression
+   69           | Expression '-' Expression
+   70           | Expression '/' Expression
+   71           | Expression '%' Expression
+   72           | Expression '>' Expression
+   73           | Expression '<' Expression
+   74           | Expression LE Expression
+   75           | Expression GE Expression
+   76           | Expression EQUALS Expression
+   77           | Expression NOT_EQUALS Expression
+   78           | Expression AND_OPERATOR M Expression
+   79           | Expression OR_OPERATOR M Expression
+   80           | NOT_OPERATOR Expression
+   81           | '-' Expression
+   82           | IDENTIFIER
+   83           | INT_CONST
+   84           | FLOAT
+   85           | STRING
+   86           | KEYWORD_TRUE
+   87           | KEYWORD_FALSE
+   88           | '[' ArrayList ']'
+   89           | FunctionCall
+
+   90 ArrayList: Expression
+   91          | ArrayList ',' Expression
+
+   92 $@8: /* empty */
+
+   93 FunctionCall: IDENTIFIER '(' $@8 ArgList ')'
+
+   94 ArgList: /* empty */
+   95        | Arguments
+
+   96 Arguments: Expression
+   97          | Expression ',' ArgList
+
+   98 M: /* empty */
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+'%' (37) 71
+'(' (40) 6 60 61 62 63 64 65 66 93
+')' (41) 6 60 61 62 63 64 65 66 93
+'*' (42) 68
+'+' (43) 67
+',' (44) 11 34 91 97
+'-' (45) 69 81
+'/' (47) 70
+':' (58) 40 53 55 57
+';' (59) 25 32 43 44 45 46 59 60 61 62 63 64 65
+'<' (60) 73
+'=' (61) 36 37 38 39 40
+'>' (62) 72
+'?' (63) 40
+'@' (64) 10 11 32 34
+'[' (91) 38 39 63 65 88
+']' (93) 38 39 63 65 88
+error (256)
+IDENTIFIER (258) 6 10 11 32 34 37 38 39 40 41 42 60 61 63 65 82 93
+STRING (259) 85
+INT_CONST (260) 83
+FLOAT (261) 84
+KEYWORD_BREAK (262) 44
+KEYWORD_CONTINUE (263) 43
+KEYWORD_RETURN (264) 45 46
+KEYWORD_VAR (265) 10 11 32
+KEYWORD_FUNCTION (266) 6
+KEYWORD_FLOAT (267) 14
+KEYWORD_INT (268) 12
+KEYWORD_CHAR (269) 13
+KEYWORD_STRING (270) 15
+KEYWORD_BOOL (271) 16
+INT_ARRAY (272) 17
+FLOAT_ARRAY (273) 19
+CHAR_ARRAY (274) 18
+STRING_ARRAY (275) 20
+BOOL_ARRAY (276)
+KEYWORD_IF (277) 47 49
+KEYWORD_ELSE (278) 49
+KEYWORD_SWITCH (279) 51
+KEYWORD_CASE (280) 53 55
+KEYWORD_DEFAULT (281) 57
+KEYWORD_DO (282) 59
+KEYWORD_WHILE (283) 58 59
+KEYWORD_FOR (284) 60 61
+KEYWORD_IN (285)
+BLOCK_BEGIN (286) 31 51
+BLOCK_END (287) 31 51
+REAL (288)
+OR_OPERATOR (289) 79
+AND_OPERATOR (290) 78
+NOT_OPERATOR (291) 80
+BITWISE_OR (292)
+BITWISE_AND (293)
+BITWISE_XOR (294)
+BITWISE_LSHIFT (295)
+BITWISE_RSHIFT (296)
+BITWISE_NOT (297)
+INCREMENT_BY (298)
+DECREMENT_BY (299)
+MULTIPLY_BY (300)
+DIVIDE_BY (301)
+MODULO_BY (302)
+AND_ASSIGN (303)
+OR_ASSIGN (304)
+XOR_ASSIGN (305)
+LSHIFT_ASSIGN (306)
+RSHIFT_ASSIGN (307)
+EQUALS (308) 76
+NOT_EQUALS (309) 77
+LE (310) 74
+GE (311) 75
+INCREMENT (312) 41 60
+DECREMENT (313) 42 61
+KEYWORD_THIS (314)
+KEYWORD_NEW (315)
+KEYWORD_DELETE (316)
+KEYWORD_PRINT (317) 62 63
+KEYWORD_SCAN (318) 64 65
+KEYWORD_TRUE (319) 86
+KEYWORD_FALSE (320) 87
+KEYWORD_NULL (321)
+NO_ELSE (322)
+UMINUS (323)
+
+
+Nonterminals, with rules where they appear
+
+$accept (86)
+    on left: 0
+Start (87)
+    on left: 2, on right: 0
+$@1 (88)
+    on left: 1, on right: 2
+Program (89)
+    on left: 3 4, on right: 2 4
+Element (90)
+    on left: 6 7, on right: 4
+$@2 (91)
+    on left: 5, on right: 6
+ParametersOption (92)
+    on left: 8 9, on right: 6
+Parameters (93)
+    on left: 10 11, on right: 9 11
+Type (94)
+    on left: 12 13 14 15 16 17 18 19 20, on right: 10 11 32 34
+Statements (95)
+    on left: 21 22, on right: 21 31 53 55 57
+Statement (96)
+    on left: 23 24 25 26 27 28 29 30, on right: 7 21 22 47 49 58 59
+    60 61
+CompoundStatement (97)
+    on left: 31, on right: 6 23
+DeclarationStatement (98)
+    on left: 32, on right: 24
+DecList (99)
+    on left: 33 34, on right: 32 34
+Assign (100)
+    on left: 35 36, on right: 32 34
+AssignmentStatement (101)
+    on left: 37 38 39 40 41 42, on right: 25 60 61
+JumpStatement (102)
+    on left: 43 44 45 46, on right: 26
+ConditionStatement (103)
+    on left: 47 49 51, on right: 27
+$@3 (104)
+    on left: 48, on right: 49
+$@4 (105)
+    on left: 50, on right: 51
+Cases (106)
+    on left: 53 55 57, on right: 51 53 57
+$@5 (107)
+    on left: 52, on right: 53
+$@6 (108)
+    on left: 54, on right: 55
+$@7 (109)
+    on left: 56, on right: 57
+LoopStatement (110)
+    on left: 58 59 60 61, on right: 28
+PrintStatement (111)
+    on left: 62 63, on right: 29
+ScanStatement (112)
+    on left: 64 65, on right: 30
+Expression (113)
+    on left: 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83
+    84 85 86 87 88 89, on right: 36 37 38 39 40 46 47 49 51 53 55 58
+    59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79
+    80 81 90 91 96 97
+ArrayList (114)
+    on left: 90 91, on right: 88 91
+FunctionCall (115)
+    on left: 93, on right: 89
+$@8 (116)
+    on left: 92, on right: 93
+ArgList (117)
+    on left: 94 95, on right: 93 97
+Arguments (118)
+    on left: 96 97, on right: 95
+M (119)
+    on left: 98, on right: 21 31 47 49 58 59 60 61 78 79
+
+
+state 0
+
+    0 $accept: . Start $end
+
+    $default  reduce using rule 1 ($@1)
+
+    Start  go to state 1
+    $@1    go to state 2
+
+
+state 1
+
+    0 $accept: Start . $end
+
+    $end  shift, and go to state 3
+
+
+state 2
+
+    2 Start: $@1 . Program
+
+    IDENTIFIER        shift, and go to state 4
+    KEYWORD_BREAK     shift, and go to state 5
+    KEYWORD_CONTINUE  shift, and go to state 6
+    KEYWORD_RETURN    shift, and go to state 7
+    KEYWORD_VAR       shift, and go to state 8
+    KEYWORD_FUNCTION  shift, and go to state 9
+    KEYWORD_IF        shift, and go to state 10
+    KEYWORD_SWITCH    shift, and go to state 11
+    KEYWORD_DO        shift, and go to state 12
+    KEYWORD_WHILE     shift, and go to state 13
+    KEYWORD_FOR       shift, and go to state 14
+    BLOCK_BEGIN       shift, and go to state 15
+    KEYWORD_PRINT     shift, and go to state 16
+    KEYWORD_SCAN      shift, and go to state 17
+
+    $default  reduce using rule 3 (Program)
+
+    Program               go to state 18
+    Element               go to state 19
+    Statement             go to state 20
+    CompoundStatement     go to state 21
+    DeclarationStatement  go to state 22
+    AssignmentStatement   go to state 23
+    JumpStatement         go to state 24
+    ConditionStatement    go to state 25
+    LoopStatement         go to state 26
+    PrintStatement        go to state 27
+    ScanStatement         go to state 28
+
+
+state 3
+
+    0 $accept: Start $end .
+
+    $default  accept
+
+
+state 4
+
+   37 AssignmentStatement: IDENTIFIER . '=' Expression
+   38                    | IDENTIFIER . '=' IDENTIFIER '[' Expression ']'
+   39                    | IDENTIFIER . '[' Expression ']' '=' Expression
+   40                    | IDENTIFIER . '=' Expression '?' Expression ':' Expression
+   41                    | IDENTIFIER . INCREMENT
+   42                    | IDENTIFIER . DECREMENT
+
+    INCREMENT  shift, and go to state 29
+    DECREMENT  shift, and go to state 30
+    '='        shift, and go to state 31
+    '['        shift, and go to state 32
+
+
+state 5
+
+   44 JumpStatement: KEYWORD_BREAK . ';'
+
+    ';'  shift, and go to state 33
+
+
+state 6
+
+   43 JumpStatement: KEYWORD_CONTINUE . ';'
+
+    ';'  shift, and go to state 34
+
+
+state 7
+
+   45 JumpStatement: KEYWORD_RETURN . ';'
+   46              | KEYWORD_RETURN . Expression ';'
+
+    IDENTIFIER     shift, and go to state 35
+    STRING         shift, and go to state 36
+    INT_CONST      shift, and go to state 37
+    FLOAT          shift, and go to state 38
+    NOT_OPERATOR   shift, and go to state 39
+    KEYWORD_TRUE   shift, and go to state 40
+    KEYWORD_FALSE  shift, and go to state 41
+    '-'            shift, and go to state 42
+    '('            shift, and go to state 43
+    ';'            shift, and go to state 44
+    '['            shift, and go to state 45
+
+    Expression    go to state 46
+    FunctionCall  go to state 47
+
+
+state 8
+
+   32 DeclarationStatement: KEYWORD_VAR . DecList IDENTIFIER '@' Type Assign ';'
+
+    $default  reduce using rule 33 (DecList)
+
+    DecList  go to state 48
+
+
+state 9
+
+    6 Element: KEYWORD_FUNCTION . IDENTIFIER $@2 '(' ParametersOption ')' CompoundStatement
+
+    IDENTIFIER  shift, and go to state 49
+
+
+state 10
+
+   47 ConditionStatement: KEYWORD_IF . Expression M Statement
+   49                   | KEYWORD_IF . Expression M Statement KEYWORD_ELSE $@3 M Statement
+
+    IDENTIFIER     shift, and go to state 35
+    STRING         shift, and go to state 36
+    INT_CONST      shift, and go to state 37
+    FLOAT          shift, and go to state 38
+    NOT_OPERATOR   shift, and go to state 39
+    KEYWORD_TRUE   shift, and go to state 40
+    KEYWORD_FALSE  shift, and go to state 41
+    '-'            shift, and go to state 42
+    '('            shift, and go to state 43
+    '['            shift, and go to state 45
+
+    Expression    go to state 50
+    FunctionCall  go to state 47
+
+
+state 11
+
+   51 ConditionStatement: KEYWORD_SWITCH . Expression BLOCK_BEGIN $@4 Cases BLOCK_END
+
+    IDENTIFIER     shift, and go to state 35
+    STRING         shift, and go to state 36
+    INT_CONST      shift, and go to state 37
+    FLOAT          shift, and go to state 38
+    NOT_OPERATOR   shift, and go to state 39
+    KEYWORD_TRUE   shift, and go to state 40
+    KEYWORD_FALSE  shift, and go to state 41
+    '-'            shift, and go to state 42
+    '('            shift, and go to state 43
+    '['            shift, and go to state 45
+
+    Expression    go to state 51
+    FunctionCall  go to state 47
+
+
+state 12
+
+   59 LoopStatement: KEYWORD_DO . M Statement KEYWORD_WHILE M Expression ';'
+
+    $default  reduce using rule 98 (M)
+
+    M  go to state 52
+
+
+state 13
+
+   58 LoopStatement: KEYWORD_WHILE . M Expression M Statement
+
+    $default  reduce using rule 98 (M)
+
+    M  go to state 53
+
+
+state 14
+
+   60 LoopStatement: KEYWORD_FOR . '(' AssignmentStatement ';' M Expression ';' M IDENTIFIER INCREMENT ')' Statement
+   61              | KEYWORD_FOR . '(' AssignmentStatement ';' M Expression ';' M IDENTIFIER DECREMENT ')' Statement
+
+    '('  shift, and go to state 54
+
+
+state 15
+
+   31 CompoundStatement: BLOCK_BEGIN . Statements M BLOCK_END
+
+    IDENTIFIER        shift, and go to state 4
+    KEYWORD_BREAK     shift, and go to state 5
+    KEYWORD_CONTINUE  shift, and go to state 6
+    KEYWORD_RETURN    shift, and go to state 7
+    KEYWORD_VAR       shift, and go to state 8
+    KEYWORD_IF        shift, and go to state 10
+    KEYWORD_SWITCH    shift, and go to state 11
+    KEYWORD_DO        shift, and go to state 12
+    KEYWORD_WHILE     shift, and go to state 13
+    KEYWORD_FOR       shift, and go to state 14
+    BLOCK_BEGIN       shift, and go to state 15
+    KEYWORD_PRINT     shift, and go to state 16
+    KEYWORD_SCAN      shift, and go to state 17
+
+    Statements            go to state 55
+    Statement             go to state 56
+    CompoundStatement     go to state 21
+    DeclarationStatement  go to state 22
+    AssignmentStatement   go to state 23
+    JumpStatement         go to state 24
+    ConditionStatement    go to state 25
+    LoopStatement         go to state 26
+    PrintStatement        go to state 27
+    ScanStatement         go to state 28
+
+
+state 16
+
+   62 PrintStatement: KEYWORD_PRINT . '(' Expression ')' ';'
+   63               | KEYWORD_PRINT . '(' IDENTIFIER '[' Expression ']' ')' ';'
+
+    '('  shift, and go to state 57
+
+
+state 17
+
+   64 ScanStatement: KEYWORD_SCAN . '(' Expression ')' ';'
+   65              | KEYWORD_SCAN . '(' IDENTIFIER '[' Expression ']' ')' ';'
+
+    '('  shift, and go to state 58
+
+
+state 18
+
+    2 Start: $@1 Program .
+
+    $default  reduce using rule 2 (Start)
+
+
+state 19
+
+    4 Program: Element . Program
+
+    IDENTIFIER        shift, and go to state 4
+    KEYWORD_BREAK     shift, and go to state 5
+    KEYWORD_CONTINUE  shift, and go to state 6
+    KEYWORD_RETURN    shift, and go to state 7
+    KEYWORD_VAR       shift, and go to state 8
+    KEYWORD_FUNCTION  shift, and go to state 9
+    KEYWORD_IF        shift, and go to state 10
+    KEYWORD_SWITCH    shift, and go to state 11
+    KEYWORD_DO        shift, and go to state 12
+    KEYWORD_WHILE     shift, and go to state 13
+    KEYWORD_FOR       shift, and go to state 14
+    BLOCK_BEGIN       shift, and go to state 15
+    KEYWORD_PRINT     shift, and go to state 16
+    KEYWORD_SCAN      shift, and go to state 17
+
+    $default  reduce using rule 3 (Program)
+
+    Program               go to state 59
+    Element               go to state 19
+    Statement             go to state 20
+    CompoundStatement     go to state 21
+    DeclarationStatement  go to state 22
+    AssignmentStatement   go to state 23
+    JumpStatement         go to state 24
+    ConditionStatement    go to state 25
+    LoopStatement         go to state 26
+    PrintStatement        go to state 27
+    ScanStatement         go to state 28
+
+
+state 20
+
+    7 Element: Statement .
+
+    $default  reduce using rule 7 (Element)
+
+
+state 21
+
+   23 Statement: CompoundStatement .
+
+    $default  reduce using rule 23 (Statement)
+
+
+state 22
+
+   24 Statement: DeclarationStatement .
+
+    $default  reduce using rule 24 (Statement)
+
+
+state 23
+
+   25 Statement: AssignmentStatement . ';'
+
+    ';'  shift, and go to state 60
+
+
+state 24
+
+   26 Statement: JumpStatement .
+
+    $default  reduce using rule 26 (Statement)
+
+
+state 25
+
+   27 Statement: ConditionStatement .
+
+    $default  reduce using rule 27 (Statement)
+
+
+state 26
+
+   28 Statement: LoopStatement .
+
+    $default  reduce using rule 28 (Statement)
+
+
+state 27
+
+   29 Statement: PrintStatement .
+
+    $default  reduce using rule 29 (Statement)
+
+
+state 28
+
+   30 Statement: ScanStatement .
+
+    $default  reduce using rule 30 (Statement)
+
+
+state 29
+
+   41 AssignmentStatement: IDENTIFIER INCREMENT .
+
+    $default  reduce using rule 41 (AssignmentStatement)
+
+
+state 30
+
+   42 AssignmentStatement: IDENTIFIER DECREMENT .
+
+    $default  reduce using rule 42 (AssignmentStatement)
+
+
+state 31
+
+   37 AssignmentStatement: IDENTIFIER '=' . Expression
+   38                    | IDENTIFIER '=' . IDENTIFIER '[' Expression ']'
+   40                    | IDENTIFIER '=' . Expression '?' Expression ':' Expression
+
+    IDENTIFIER     shift, and go to state 61
+    STRING         shift, and go to state 36
+    INT_CONST      shift, and go to state 37
+    FLOAT          shift, and go to state 38
+    NOT_OPERATOR   shift, and go to state 39
+    KEYWORD_TRUE   shift, and go to state 40
+    KEYWORD_FALSE  shift, and go to state 41
+    '-'            shift, and go to state 42
+    '('            shift, and go to state 43
+    '['            shift, and go to state 45
+
+    Expression    go to state 62
+    FunctionCall  go to state 47
+
+
+state 32
+
+   39 AssignmentStatement: IDENTIFIER '[' . Expression ']' '=' Expression
+
+    IDENTIFIER     shift, and go to state 35
+    STRING         shift, and go to state 36
+    INT_CONST      shift, and go to state 37
+    FLOAT          shift, and go to state 38
+    NOT_OPERATOR   shift, and go to state 39
+    KEYWORD_TRUE   shift, and go to state 40
+    KEYWORD_FALSE  shift, and go to state 41
+    '-'            shift, and go to state 42
+    '('            shift, and go to state 43
+    '['            shift, and go to state 45
+
+    Expression    go to state 63
+    FunctionCall  go to state 47
+
+
+state 33
+
+   44 JumpStatement: KEYWORD_BREAK ';' .
+
+    $default  reduce using rule 44 (JumpStatement)
+
+
+state 34
+
+   43 JumpStatement: KEYWORD_CONTINUE ';' .
+
+    $default  reduce using rule 43 (JumpStatement)
+
+
+state 35
+
+   82 Expression: IDENTIFIER .
+   93 FunctionCall: IDENTIFIER . '(' $@8 ArgList ')'
+
+    '('  shift, and go to state 64
+
+    $default  reduce using rule 82 (Expression)
+
+
+state 36
+
+   85 Expression: STRING .
+
+    $default  reduce using rule 85 (Expression)
+
+
+state 37
+
+   83 Expression: INT_CONST .
+
+    $default  reduce using rule 83 (Expression)
+
+
+state 38
+
+   84 Expression: FLOAT .
+
+    $default  reduce using rule 84 (Expression)
+
+
+state 39
+
+   80 Expression: NOT_OPERATOR . Expression
+
+    IDENTIFIER     shift, and go to state 35
+    STRING         shift, and go to state 36
+    INT_CONST      shift, and go to state 37
+    FLOAT          shift, and go to state 38
+    NOT_OPERATOR   shift, and go to state 39
+    KEYWORD_TRUE   shift, and go to state 40
+    KEYWORD_FALSE  shift, and go to state 41
+    '-'            shift, and go to state 42
+    '('            shift, and go to state 43
+    '['            shift, and go to state 45
+
+    Expression    go to state 65
+    FunctionCall  go to state 47
+
+
+state 40
+
+   86 Expression: KEYWORD_TRUE .
+
+    $default  reduce using rule 86 (Expression)
+
+
+state 41
+
+   87 Expression: KEYWORD_FALSE .
+
+    $default  reduce using rule 87 (Expression)
+
+
+state 42
+
+   81 Expression: '-' . Expression
+
+    IDENTIFIER     shift, and go to state 35
+    STRING         shift, and go to state 36
+    INT_CONST      shift, and go to state 37
+    FLOAT          shift, and go to state 38
+    NOT_OPERATOR   shift, and go to state 39
+    KEYWORD_TRUE   shift, and go to state 40
+    KEYWORD_FALSE  shift, and go to state 41
+    '-'            shift, and go to state 42
+    '('            shift, and go to state 43
+    '['            shift, and go to state 45
+
+    Expression    go to state 66
+    FunctionCall  go to state 47
+
+
+state 43
+
+   66 Expression: '(' . Expression ')'
+
+    IDENTIFIER     shift, and go to state 35
+    STRING         shift, and go to state 36
+    INT_CONST      shift, and go to state 37
+    FLOAT          shift, and go to state 38
+    NOT_OPERATOR   shift, and go to state 39
+    KEYWORD_TRUE   shift, and go to state 40
+    KEYWORD_FALSE  shift, and go to state 41
+    '-'            shift, and go to state 42
+    '('            shift, and go to state 43
+    '['            shift, and go to state 45
+
+    Expression    go to state 67
+    FunctionCall  go to state 47
+
+
+state 44
+
+   45 JumpStatement: KEYWORD_RETURN ';' .
+
+    $default  reduce using rule 45 (JumpStatement)
+
+
+state 45
+
+   88 Expression: '[' . ArrayList ']'
+
+    IDENTIFIER     shift, and go to state 35
+    STRING         shift, and go to state 36
+    INT_CONST      shift, and go to state 37
+    FLOAT          shift, and go to state 38
+    NOT_OPERATOR   shift, and go to state 39
+    KEYWORD_TRUE   shift, and go to state 40
+    KEYWORD_FALSE  shift, and go to state 41
+    '-'            shift, and go to state 42
+    '('            shift, and go to state 43
+    '['            shift, and go to state 45
+
+    Expression    go to state 68
+    ArrayList     go to state 69
+    FunctionCall  go to state 47
+
+
+state 46
+
+   46 JumpStatement: KEYWORD_RETURN Expression . ';'
+   67 Expression: Expression . '+' Expression
+   68           | Expression . '*' Expression
+   69           | Expression . '-' Expression
+   70           | Expression . '/' Expression
+   71           | Expression . '%' Expression
+   72           | Expression . '>' Expression
+   73           | Expression . '<' Expression
+   74           | Expression . LE Expression
+   75           | Expression . GE Expression
+   76           | Expression . EQUALS Expression
+   77           | Expression . NOT_EQUALS Expression
+   78           | Expression . AND_OPERATOR M Expression
+   79           | Expression . OR_OPERATOR M Expression
+
+    OR_OPERATOR   shift, and go to state 70
+    AND_OPERATOR  shift, and go to state 71
+    EQUALS        shift, and go to state 72
+    NOT_EQUALS    shift, and go to state 73
+    LE            shift, and go to state 74
+    GE            shift, and go to state 75
+    '<'           shift, and go to state 76
+    '>'           shift, and go to state 77
+    '+'           shift, and go to state 78
+    '-'           shift, and go to state 79
+    '*'           shift, and go to state 80
+    '/'           shift, and go to state 81
+    '%'           shift, and go to state 82
+    ';'           shift, and go to state 83
+
+
+state 47
+
+   89 Expression: FunctionCall .
+
+    $default  reduce using rule 89 (Expression)
+
+
+state 48
+
+   32 DeclarationStatement: KEYWORD_VAR DecList . IDENTIFIER '@' Type Assign ';'
+   34 DecList: DecList . IDENTIFIER '@' Type Assign ','
+
+    IDENTIFIER  shift, and go to state 84
+
+
+state 49
+
+    6 Element: KEYWORD_FUNCTION IDENTIFIER . $@2 '(' ParametersOption ')' CompoundStatement
+
+    $default  reduce using rule 5 ($@2)
+
+    $@2  go to state 85
+
+
+state 50
+
+   47 ConditionStatement: KEYWORD_IF Expression . M Statement
+   49                   | KEYWORD_IF Expression . M Statement KEYWORD_ELSE $@3 M Statement
+   67 Expression: Expression . '+' Expression
+   68           | Expression . '*' Expression
+   69           | Expression . '-' Expression
+   70           | Expression . '/' Expression
+   71           | Expression . '%' Expression
+   72           | Expression . '>' Expression
+   73           | Expression . '<' Expression
+   74           | Expression . LE Expression
+   75           | Expression . GE Expression
+   76           | Expression . EQUALS Expression
+   77           | Expression . NOT_EQUALS Expression
+   78           | Expression . AND_OPERATOR M Expression
+   79           | Expression . OR_OPERATOR M Expression
+
+    OR_OPERATOR   shift, and go to state 70
+    AND_OPERATOR  shift, and go to state 71
+    EQUALS        shift, and go to state 72
+    NOT_EQUALS    shift, and go to state 73
+    LE            shift, and go to state 74
+    GE            shift, and go to state 75
+    '<'           shift, and go to state 76
+    '>'           shift, and go to state 77
+    '+'           shift, and go to state 78
+    '-'           shift, and go to state 79
+    '*'           shift, and go to state 80
+    '/'           shift, and go to state 81
+    '%'           shift, and go to state 82
+
+    $default  reduce using rule 98 (M)
+
+    M  go to state 86
+
+
+state 51
+
+   51 ConditionStatement: KEYWORD_SWITCH Expression . BLOCK_BEGIN $@4 Cases BLOCK_END
+   67 Expression: Expression . '+' Expression
+   68           | Expression . '*' Expression
+   69           | Expression . '-' Expression
+   70           | Expression . '/' Expression
+   71           | Expression . '%' Expression
+   72           | Expression . '>' Expression
+   73           | Expression . '<' Expression
+   74           | Expression . LE Expression
+   75           | Expression . GE Expression
+   76           | Expression . EQUALS Expression
+   77           | Expression . NOT_EQUALS Expression
+   78           | Expression . AND_OPERATOR M Expression
+   79           | Expression . OR_OPERATOR M Expression
+
+    BLOCK_BEGIN   shift, and go to state 87
+    OR_OPERATOR   shift, and go to state 70
+    AND_OPERATOR  shift, and go to state 71
+    EQUALS        shift, and go to state 72
+    NOT_EQUALS    shift, and go to state 73
+    LE            shift, and go to state 74
+    GE            shift, and go to state 75
+    '<'           shift, and go to state 76
+    '>'           shift, and go to state 77
+    '+'           shift, and go to state 78
+    '-'           shift, and go to state 79
+    '*'           shift, and go to state 80
+    '/'           shift, and go to state 81
+    '%'           shift, and go to state 82
+
+
+state 52
+
+   59 LoopStatement: KEYWORD_DO M . Statement KEYWORD_WHILE M Expression ';'
+
+    IDENTIFIER        shift, and go to state 4
+    KEYWORD_BREAK     shift, and go to state 5
+    KEYWORD_CONTINUE  shift, and go to state 6
+    KEYWORD_RETURN    shift, and go to state 7
+    KEYWORD_VAR       shift, and go to state 8
+    KEYWORD_IF        shift, and go to state 10
+    KEYWORD_SWITCH    shift, and go to state 11
+    KEYWORD_DO        shift, and go to state 12
+    KEYWORD_WHILE     shift, and go to state 13
+    KEYWORD_FOR       shift, and go to state 14
+    BLOCK_BEGIN       shift, and go to state 15
+    KEYWORD_PRINT     shift, and go to state 16
+    KEYWORD_SCAN      shift, and go to state 17
+
+    Statement             go to state 88
+    CompoundStatement     go to state 21
+    DeclarationStatement  go to state 22
+    AssignmentStatement   go to state 23
+    JumpStatement         go to state 24
+    ConditionStatement    go to state 25
+    LoopStatement         go to state 26
+    PrintStatement        go to state 27
+    ScanStatement         go to state 28
+
+
+state 53
+
+   58 LoopStatement: KEYWORD_WHILE M . Expression M Statement
+
+    IDENTIFIER     shift, and go to state 35
+    STRING         shift, and go to state 36
+    INT_CONST      shift, and go to state 37
+    FLOAT          shift, and go to state 38
+    NOT_OPERATOR   shift, and go to state 39
+    KEYWORD_TRUE   shift, and go to state 40
+    KEYWORD_FALSE  shift, and go to state 41
+    '-'            shift, and go to state 42
+    '('            shift, and go to state 43
+    '['            shift, and go to state 45
+
+    Expression    go to state 89
+    FunctionCall  go to state 47
+
+
+state 54
+
+   60 LoopStatement: KEYWORD_FOR '(' . AssignmentStatement ';' M Expression ';' M IDENTIFIER INCREMENT ')' Statement
+   61              | KEYWORD_FOR '(' . AssignmentStatement ';' M Expression ';' M IDENTIFIER DECREMENT ')' Statement
+
+    IDENTIFIER  shift, and go to state 4
+
+    AssignmentStatement  go to state 90
+
+
+state 55
+
+   31 CompoundStatement: BLOCK_BEGIN Statements . M BLOCK_END
+
+    $default  reduce using rule 98 (M)
+
+    M  go to state 91
+
+
+state 56
+
+   21 Statements: Statement . M Statements
+   22           | Statement .
+
+    KEYWORD_CASE     reduce using rule 22 (Statements)
+    KEYWORD_DEFAULT  reduce using rule 22 (Statements)
+    BLOCK_END        reduce using rule 22 (Statements)
+    $default         reduce using rule 98 (M)
+
+    M  go to state 92
+
+
+state 57
+
+   62 PrintStatement: KEYWORD_PRINT '(' . Expression ')' ';'
+   63               | KEYWORD_PRINT '(' . IDENTIFIER '[' Expression ']' ')' ';'
+
+    IDENTIFIER     shift, and go to state 93
+    STRING         shift, and go to state 36
+    INT_CONST      shift, and go to state 37
+    FLOAT          shift, and go to state 38
+    NOT_OPERATOR   shift, and go to state 39
+    KEYWORD_TRUE   shift, and go to state 40
+    KEYWORD_FALSE  shift, and go to state 41
+    '-'            shift, and go to state 42
+    '('            shift, and go to state 43
+    '['            shift, and go to state 45
+
+    Expression    go to state 94
+    FunctionCall  go to state 47
+
+
+state 58
+
+   64 ScanStatement: KEYWORD_SCAN '(' . Expression ')' ';'
+   65              | KEYWORD_SCAN '(' . IDENTIFIER '[' Expression ']' ')' ';'
+
+    IDENTIFIER     shift, and go to state 95
+    STRING         shift, and go to state 36
+    INT_CONST      shift, and go to state 37
+    FLOAT          shift, and go to state 38
+    NOT_OPERATOR   shift, and go to state 39
+    KEYWORD_TRUE   shift, and go to state 40
+    KEYWORD_FALSE  shift, and go to state 41
+    '-'            shift, and go to state 42
+    '('            shift, and go to state 43
+    '['            shift, and go to state 45
+
+    Expression    go to state 96
+    FunctionCall  go to state 47
+
+
+state 59
+
+    4 Program: Element Program .
+
+    $default  reduce using rule 4 (Program)
+
+
+state 60
+
+   25 Statement: AssignmentStatement ';' .
+
+    $default  reduce using rule 25 (Statement)
+
+
+state 61
+
+   38 AssignmentStatement: IDENTIFIER '=' IDENTIFIER . '[' Expression ']'
+   82 Expression: IDENTIFIER .
+   93 FunctionCall: IDENTIFIER . '(' $@8 ArgList ')'
+
+    '('  shift, and go to state 64
+    '['  shift, and go to state 97
+
+    $default  reduce using rule 82 (Expression)
+
+
+state 62
+
+   37 AssignmentStatement: IDENTIFIER '=' Expression .
+   40                    | IDENTIFIER '=' Expression . '?' Expression ':' Expression
+   67 Expression: Expression . '+' Expression
+   68           | Expression . '*' Expression
+   69           | Expression . '-' Expression
+   70           | Expression . '/' Expression
+   71           | Expression . '%' Expression
+   72           | Expression . '>' Expression
+   73           | Expression . '<' Expression
+   74           | Expression . LE Expression
+   75           | Expression . GE Expression
+   76           | Expression . EQUALS Expression
+   77           | Expression . NOT_EQUALS Expression
+   78           | Expression . AND_OPERATOR M Expression
+   79           | Expression . OR_OPERATOR M Expression
+
+    OR_OPERATOR   shift, and go to state 70
+    AND_OPERATOR  shift, and go to state 71
+    EQUALS        shift, and go to state 72
+    NOT_EQUALS    shift, and go to state 73
+    LE            shift, and go to state 74
+    GE            shift, and go to state 75
+    '?'           shift, and go to state 98
+    '<'           shift, and go to state 76
+    '>'           shift, and go to state 77
+    '+'           shift, and go to state 78
+    '-'           shift, and go to state 79
+    '*'           shift, and go to state 80
+    '/'           shift, and go to state 81
+    '%'           shift, and go to state 82
+
+    $default  reduce using rule 37 (AssignmentStatement)
+
+
+state 63
+
+   39 AssignmentStatement: IDENTIFIER '[' Expression . ']' '=' Expression
+   67 Expression: Expression . '+' Expression
+   68           | Expression . '*' Expression
+   69           | Expression . '-' Expression
+   70           | Expression . '/' Expression
+   71           | Expression . '%' Expression
+   72           | Expression . '>' Expression
+   73           | Expression . '<' Expression
+   74           | Expression . LE Expression
+   75           | Expression . GE Expression
+   76           | Expression . EQUALS Expression
+   77           | Expression . NOT_EQUALS Expression
+   78           | Expression . AND_OPERATOR M Expression
+   79           | Expression . OR_OPERATOR M Expression
+
+    OR_OPERATOR   shift, and go to state 70
+    AND_OPERATOR  shift, and go to state 71
+    EQUALS        shift, and go to state 72
+    NOT_EQUALS    shift, and go to state 73
+    LE            shift, and go to state 74
+    GE            shift, and go to state 75
+    '<'           shift, and go to state 76
+    '>'           shift, and go to state 77
+    '+'           shift, and go to state 78
+    '-'           shift, and go to state 79
+    '*'           shift, and go to state 80
+    '/'           shift, and go to state 81
+    '%'           shift, and go to state 82
+    ']'           shift, and go to state 99
+
+
+state 64
+
+   93 FunctionCall: IDENTIFIER '(' . $@8 ArgList ')'
+
+    $default  reduce using rule 92 ($@8)
+
+    $@8  go to state 100
+
+
+state 65
+
+   67 Expression: Expression . '+' Expression
+   68           | Expression . '*' Expression
+   69           | Expression . '-' Expression
+   70           | Expression . '/' Expression
+   71           | Expression . '%' Expression
+   72           | Expression . '>' Expression
+   73           | Expression . '<' Expression
+   74           | Expression . LE Expression
+   75           | Expression . GE Expression
+   76           | Expression . EQUALS Expression
+   77           | Expression . NOT_EQUALS Expression
+   78           | Expression . AND_OPERATOR M Expression
+   79           | Expression . OR_OPERATOR M Expression
+   80           | NOT_OPERATOR Expression .
+
+    $default  reduce using rule 80 (Expression)
+
+
+state 66
+
+   67 Expression: Expression . '+' Expression
+   68           | Expression . '*' Expression
+   69           | Expression . '-' Expression
+   70           | Expression . '/' Expression
+   71           | Expression . '%' Expression
+   72           | Expression . '>' Expression
+   73           | Expression . '<' Expression
+   74           | Expression . LE Expression
+   75           | Expression . GE Expression
+   76           | Expression . EQUALS Expression
+   77           | Expression . NOT_EQUALS Expression
+   78           | Expression . AND_OPERATOR M Expression
+   79           | Expression . OR_OPERATOR M Expression
+   81           | '-' Expression .
+
+    $default  reduce using rule 81 (Expression)
+
+
+state 67
+
+   66 Expression: '(' Expression . ')'
+   67           | Expression . '+' Expression
+   68           | Expression . '*' Expression
+   69           | Expression . '-' Expression
+   70           | Expression . '/' Expression
+   71           | Expression . '%' Expression
+   72           | Expression . '>' Expression
+   73           | Expression . '<' Expression
+   74           | Expression . LE Expression
+   75           | Expression . GE Expression
+   76           | Expression . EQUALS Expression
+   77           | Expression . NOT_EQUALS Expression
+   78           | Expression . AND_OPERATOR M Expression
+   79           | Expression . OR_OPERATOR M Expression
+
+    OR_OPERATOR   shift, and go to state 70
+    AND_OPERATOR  shift, and go to state 71
+    EQUALS        shift, and go to state 72
+    NOT_EQUALS    shift, and go to state 73
+    LE            shift, and go to state 74
+    GE            shift, and go to state 75
+    '<'           shift, and go to state 76
+    '>'           shift, and go to state 77
+    '+'           shift, and go to state 78
+    '-'           shift, and go to state 79
+    '*'           shift, and go to state 80
+    '/'           shift, and go to state 81
+    '%'           shift, and go to state 82
+    ')'           shift, and go to state 101
+
+
+state 68
+
+   67 Expression: Expression . '+' Expression
+   68           | Expression . '*' Expression
+   69           | Expression . '-' Expression
+   70           | Expression . '/' Expression
+   71           | Expression . '%' Expression
+   72           | Expression . '>' Expression
+   73           | Expression . '<' Expression
+   74           | Expression . LE Expression
+   75           | Expression . GE Expression
+   76           | Expression . EQUALS Expression
+   77           | Expression . NOT_EQUALS Expression
+   78           | Expression . AND_OPERATOR M Expression
+   79           | Expression . OR_OPERATOR M Expression
+   90 ArrayList: Expression .
+
+    OR_OPERATOR   shift, and go to state 70
+    AND_OPERATOR  shift, and go to state 71
+    EQUALS        shift, and go to state 72
+    NOT_EQUALS    shift, and go to state 73
+    LE            shift, and go to state 74
+    GE            shift, and go to state 75
+    '<'           shift, and go to state 76
+    '>'           shift, and go to state 77
+    '+'           shift, and go to state 78
+    '-'           shift, and go to state 79
+    '*'           shift, and go to state 80
+    '/'           shift, and go to state 81
+    '%'           shift, and go to state 82
+
+    $default  reduce using rule 90 (ArrayList)
+
+
+state 69
+
+   88 Expression: '[' ArrayList . ']'
+   91 ArrayList: ArrayList . ',' Expression
+
+    ','  shift, and go to state 102
+    ']'  shift, and go to state 103
+
+
+state 70
+
+   79 Expression: Expression OR_OPERATOR . M Expression
+
+    $default  reduce using rule 98 (M)
+
+    M  go to state 104
+
+
+state 71
+
+   78 Expression: Expression AND_OPERATOR . M Expression
+
+    $default  reduce using rule 98 (M)
+
+    M  go to state 105
+
+
+state 72
+
+   76 Expression: Expression EQUALS . Expression
+
+    IDENTIFIER     shift, and go to state 35
+    STRING         shift, and go to state 36
+    INT_CONST      shift, and go to state 37
+    FLOAT          shift, and go to state 38
+    NOT_OPERATOR   shift, and go to state 39
+    KEYWORD_TRUE   shift, and go to state 40
+    KEYWORD_FALSE  shift, and go to state 41
+    '-'            shift, and go to state 42
+    '('            shift, and go to state 43
+    '['            shift, and go to state 45
+
+    Expression    go to state 106
+    FunctionCall  go to state 47
+
+
+state 73
+
+   77 Expression: Expression NOT_EQUALS . Expression
+
+    IDENTIFIER     shift, and go to state 35
+    STRING         shift, and go to state 36
+    INT_CONST      shift, and go to state 37
+    FLOAT          shift, and go to state 38
+    NOT_OPERATOR   shift, and go to state 39
+    KEYWORD_TRUE   shift, and go to state 40
+    KEYWORD_FALSE  shift, and go to state 41
+    '-'            shift, and go to state 42
+    '('            shift, and go to state 43
+    '['            shift, and go to state 45
+
+    Expression    go to state 107
+    FunctionCall  go to state 47
+
+
+state 74
+
+   74 Expression: Expression LE . Expression
+
+    IDENTIFIER     shift, and go to state 35
+    STRING         shift, and go to state 36
+    INT_CONST      shift, and go to state 37
+    FLOAT          shift, and go to state 38
+    NOT_OPERATOR   shift, and go to state 39
+    KEYWORD_TRUE   shift, and go to state 40
+    KEYWORD_FALSE  shift, and go to state 41
+    '-'            shift, and go to state 42
+    '('            shift, and go to state 43
+    '['            shift, and go to state 45
+
+    Expression    go to state 108
+    FunctionCall  go to state 47
+
+
+state 75
+
+   75 Expression: Expression GE . Expression
+
+    IDENTIFIER     shift, and go to state 35
+    STRING         shift, and go to state 36
+    INT_CONST      shift, and go to state 37
+    FLOAT          shift, and go to state 38
+    NOT_OPERATOR   shift, and go to state 39
+    KEYWORD_TRUE   shift, and go to state 40
+    KEYWORD_FALSE  shift, and go to state 41
+    '-'            shift, and go to state 42
+    '('            shift, and go to state 43
+    '['            shift, and go to state 45
+
+    Expression    go to state 109
+    FunctionCall  go to state 47
+
+
+state 76
+
+   73 Expression: Expression '<' . Expression
+
+    IDENTIFIER     shift, and go to state 35
+    STRING         shift, and go to state 36
+    INT_CONST      shift, and go to state 37
+    FLOAT          shift, and go to state 38
+    NOT_OPERATOR   shift, and go to state 39
+    KEYWORD_TRUE   shift, and go to state 40
+    KEYWORD_FALSE  shift, and go to state 41
+    '-'            shift, and go to state 42
+    '('            shift, and go to state 43
+    '['            shift, and go to state 45
+
+    Expression    go to state 110
+    FunctionCall  go to state 47
+
+
+state 77
+
+   72 Expression: Expression '>' . Expression
+
+    IDENTIFIER     shift, and go to state 35
+    STRING         shift, and go to state 36
+    INT_CONST      shift, and go to state 37
+    FLOAT          shift, and go to state 38
+    NOT_OPERATOR   shift, and go to state 39
+    KEYWORD_TRUE   shift, and go to state 40
+    KEYWORD_FALSE  shift, and go to state 41
+    '-'            shift, and go to state 42
+    '('            shift, and go to state 43
+    '['            shift, and go to state 45
+
+    Expression    go to state 111
+    FunctionCall  go to state 47
+
+
+state 78
+
+   67 Expression: Expression '+' . Expression
+
+    IDENTIFIER     shift, and go to state 35
+    STRING         shift, and go to state 36
+    INT_CONST      shift, and go to state 37
+    FLOAT          shift, and go to state 38
+    NOT_OPERATOR   shift, and go to state 39
+    KEYWORD_TRUE   shift, and go to state 40
+    KEYWORD_FALSE  shift, and go to state 41
+    '-'            shift, and go to state 42
+    '('            shift, and go to state 43
+    '['            shift, and go to state 45
+
+    Expression    go to state 112
+    FunctionCall  go to state 47
+
+
+state 79
+
+   69 Expression: Expression '-' . Expression
+
+    IDENTIFIER     shift, and go to state 35
+    STRING         shift, and go to state 36
+    INT_CONST      shift, and go to state 37
+    FLOAT          shift, and go to state 38
+    NOT_OPERATOR   shift, and go to state 39
+    KEYWORD_TRUE   shift, and go to state 40
+    KEYWORD_FALSE  shift, and go to state 41
+    '-'            shift, and go to state 42
+    '('            shift, and go to state 43
+    '['            shift, and go to state 45
+
+    Expression    go to state 113
+    FunctionCall  go to state 47
+
+
+state 80
+
+   68 Expression: Expression '*' . Expression
+
+    IDENTIFIER     shift, and go to state 35
+    STRING         shift, and go to state 36
+    INT_CONST      shift, and go to state 37
+    FLOAT          shift, and go to state 38
+    NOT_OPERATOR   shift, and go to state 39
+    KEYWORD_TRUE   shift, and go to state 40
+    KEYWORD_FALSE  shift, and go to state 41
+    '-'            shift, and go to state 42
+    '('            shift, and go to state 43
+    '['            shift, and go to state 45
+
+    Expression    go to state 114
+    FunctionCall  go to state 47
+
+
+state 81
+
+   70 Expression: Expression '/' . Expression
+
+    IDENTIFIER     shift, and go to state 35
+    STRING         shift, and go to state 36
+    INT_CONST      shift, and go to state 37
+    FLOAT          shift, and go to state 38
+    NOT_OPERATOR   shift, and go to state 39
+    KEYWORD_TRUE   shift, and go to state 40
+    KEYWORD_FALSE  shift, and go to state 41
+    '-'            shift, and go to state 42
+    '('            shift, and go to state 43
+    '['            shift, and go to state 45
+
+    Expression    go to state 115
+    FunctionCall  go to state 47
+
+
+state 82
+
+   71 Expression: Expression '%' . Expression
+
+    IDENTIFIER     shift, and go to state 35
+    STRING         shift, and go to state 36
+    INT_CONST      shift, and go to state 37
+    FLOAT          shift, and go to state 38
+    NOT_OPERATOR   shift, and go to state 39
+    KEYWORD_TRUE   shift, and go to state 40
+    KEYWORD_FALSE  shift, and go to state 41
+    '-'            shift, and go to state 42
+    '('            shift, and go to state 43
+    '['            shift, and go to state 45
+
+    Expression    go to state 116
+    FunctionCall  go to state 47
+
+
+state 83
+
+   46 JumpStatement: KEYWORD_RETURN Expression ';' .
+
+    $default  reduce using rule 46 (JumpStatement)
+
+
+state 84
+
+   32 DeclarationStatement: KEYWORD_VAR DecList IDENTIFIER . '@' Type Assign ';'
+   34 DecList: DecList IDENTIFIER . '@' Type Assign ','
+
+    '@'  shift, and go to state 117
+
+
+state 85
+
+    6 Element: KEYWORD_FUNCTION IDENTIFIER $@2 . '(' ParametersOption ')' CompoundStatement
+
+    '('  shift, and go to state 118
+
+
+state 86
+
+   47 ConditionStatement: KEYWORD_IF Expression M . Statement
+   49                   | KEYWORD_IF Expression M . Statement KEYWORD_ELSE $@3 M Statement
+
+    IDENTIFIER        shift, and go to state 4
+    KEYWORD_BREAK     shift, and go to state 5
+    KEYWORD_CONTINUE  shift, and go to state 6
+    KEYWORD_RETURN    shift, and go to state 7
+    KEYWORD_VAR       shift, and go to state 8
+    KEYWORD_IF        shift, and go to state 10
+    KEYWORD_SWITCH    shift, and go to state 11
+    KEYWORD_DO        shift, and go to state 12
+    KEYWORD_WHILE     shift, and go to state 13
+    KEYWORD_FOR       shift, and go to state 14
+    BLOCK_BEGIN       shift, and go to state 15
+    KEYWORD_PRINT     shift, and go to state 16
+    KEYWORD_SCAN      shift, and go to state 17
+
+    Statement             go to state 119
+    CompoundStatement     go to state 21
+    DeclarationStatement  go to state 22
+    AssignmentStatement   go to state 23
+    JumpStatement         go to state 24
+    ConditionStatement    go to state 25
+    LoopStatement         go to state 26
+    PrintStatement        go to state 27
+    ScanStatement         go to state 28
+
+
+state 87
+
+   51 ConditionStatement: KEYWORD_SWITCH Expression BLOCK_BEGIN . $@4 Cases BLOCK_END
+
+    $default  reduce using rule 50 ($@4)
+
+    $@4  go to state 120
+
+
+state 88
+
+   59 LoopStatement: KEYWORD_DO M Statement . KEYWORD_WHILE M Expression ';'
+
+    KEYWORD_WHILE  shift, and go to state 121
+
+
+state 89
+
+   58 LoopStatement: KEYWORD_WHILE M Expression . M Statement
+   67 Expression: Expression . '+' Expression
+   68           | Expression . '*' Expression
+   69           | Expression . '-' Expression
+   70           | Expression . '/' Expression
+   71           | Expression . '%' Expression
+   72           | Expression . '>' Expression
+   73           | Expression . '<' Expression
+   74           | Expression . LE Expression
+   75           | Expression . GE Expression
+   76           | Expression . EQUALS Expression
+   77           | Expression . NOT_EQUALS Expression
+   78           | Expression . AND_OPERATOR M Expression
+   79           | Expression . OR_OPERATOR M Expression
+
+    OR_OPERATOR   shift, and go to state 70
+    AND_OPERATOR  shift, and go to state 71
+    EQUALS        shift, and go to state 72
+    NOT_EQUALS    shift, and go to state 73
+    LE            shift, and go to state 74
+    GE            shift, and go to state 75
+    '<'           shift, and go to state 76
+    '>'           shift, and go to state 77
+    '+'           shift, and go to state 78
+    '-'           shift, and go to state 79
+    '*'           shift, and go to state 80
+    '/'           shift, and go to state 81
+    '%'           shift, and go to state 82
+
+    $default  reduce using rule 98 (M)
+
+    M  go to state 122
+
+
+state 90
+
+   60 LoopStatement: KEYWORD_FOR '(' AssignmentStatement . ';' M Expression ';' M IDENTIFIER INCREMENT ')' Statement
+   61              | KEYWORD_FOR '(' AssignmentStatement . ';' M Expression ';' M IDENTIFIER DECREMENT ')' Statement
+
+    ';'  shift, and go to state 123
+
+
+state 91
+
+   31 CompoundStatement: BLOCK_BEGIN Statements M . BLOCK_END
+
+    BLOCK_END  shift, and go to state 124
+
+
+state 92
+
+   21 Statements: Statement M . Statements
+
+    IDENTIFIER        shift, and go to state 4
+    KEYWORD_BREAK     shift, and go to state 5
+    KEYWORD_CONTINUE  shift, and go to state 6
+    KEYWORD_RETURN    shift, and go to state 7
+    KEYWORD_VAR       shift, and go to state 8
+    KEYWORD_IF        shift, and go to state 10
+    KEYWORD_SWITCH    shift, and go to state 11
+    KEYWORD_DO        shift, and go to state 12
+    KEYWORD_WHILE     shift, and go to state 13
+    KEYWORD_FOR       shift, and go to state 14
+    BLOCK_BEGIN       shift, and go to state 15
+    KEYWORD_PRINT     shift, and go to state 16
+    KEYWORD_SCAN      shift, and go to state 17
+
+    Statements            go to state 125
+    Statement             go to state 56
+    CompoundStatement     go to state 21
+    DeclarationStatement  go to state 22
+    AssignmentStatement   go to state 23
+    JumpStatement         go to state 24
+    ConditionStatement    go to state 25
+    LoopStatement         go to state 26
+    PrintStatement        go to state 27
+    ScanStatement         go to state 28
+
+
+state 93
+
+   63 PrintStatement: KEYWORD_PRINT '(' IDENTIFIER . '[' Expression ']' ')' ';'
+   82 Expression: IDENTIFIER .
+   93 FunctionCall: IDENTIFIER . '(' $@8 ArgList ')'
+
+    '('  shift, and go to state 64
+    '['  shift, and go to state 126
+
+    $default  reduce using rule 82 (Expression)
+
+
+state 94
+
+   62 PrintStatement: KEYWORD_PRINT '(' Expression . ')' ';'
+   67 Expression: Expression . '+' Expression
+   68           | Expression . '*' Expression
+   69           | Expression . '-' Expression
+   70           | Expression . '/' Expression
+   71           | Expression . '%' Expression
+   72           | Expression . '>' Expression
+   73           | Expression . '<' Expression
+   74           | Expression . LE Expression
+   75           | Expression . GE Expression
+   76           | Expression . EQUALS Expression
+   77           | Expression . NOT_EQUALS Expression
+   78           | Expression . AND_OPERATOR M Expression
+   79           | Expression . OR_OPERATOR M Expression
+
+    OR_OPERATOR   shift, and go to state 70
+    AND_OPERATOR  shift, and go to state 71
+    EQUALS        shift, and go to state 72
+    NOT_EQUALS    shift, and go to state 73
+    LE            shift, and go to state 74
+    GE            shift, and go to state 75
+    '<'           shift, and go to state 76
+    '>'           shift, and go to state 77
+    '+'           shift, and go to state 78
+    '-'           shift, and go to state 79
+    '*'           shift, and go to state 80
+    '/'           shift, and go to state 81
+    '%'           shift, and go to state 82
+    ')'           shift, and go to state 127
+
+
+state 95
+
+   65 ScanStatement: KEYWORD_SCAN '(' IDENTIFIER . '[' Expression ']' ')' ';'
+   82 Expression: IDENTIFIER .
+   93 FunctionCall: IDENTIFIER . '(' $@8 ArgList ')'
+
+    '('  shift, and go to state 64
+    '['  shift, and go to state 128
+
+    $default  reduce using rule 82 (Expression)
+
+
+state 96
+
+   64 ScanStatement: KEYWORD_SCAN '(' Expression . ')' ';'
+   67 Expression: Expression . '+' Expression
+   68           | Expression . '*' Expression
+   69           | Expression . '-' Expression
+   70           | Expression . '/' Expression
+   71           | Expression . '%' Expression
+   72           | Expression . '>' Expression
+   73           | Expression . '<' Expression
+   74           | Expression . LE Expression
+   75           | Expression . GE Expression
+   76           | Expression . EQUALS Expression
+   77           | Expression . NOT_EQUALS Expression
+   78           | Expression . AND_OPERATOR M Expression
+   79           | Expression . OR_OPERATOR M Expression
+
+    OR_OPERATOR   shift, and go to state 70
+    AND_OPERATOR  shift, and go to state 71
+    EQUALS        shift, and go to state 72
+    NOT_EQUALS    shift, and go to state 73
+    LE            shift, and go to state 74
+    GE            shift, and go to state 75
+    '<'           shift, and go to state 76
+    '>'           shift, and go to state 77
+    '+'           shift, and go to state 78
+    '-'           shift, and go to state 79
+    '*'           shift, and go to state 80
+    '/'           shift, and go to state 81
+    '%'           shift, and go to state 82
+    ')'           shift, and go to state 129
+
+
+state 97
+
+   38 AssignmentStatement: IDENTIFIER '=' IDENTIFIER '[' . Expression ']'
+
+    IDENTIFIER     shift, and go to state 35
+    STRING         shift, and go to state 36
+    INT_CONST      shift, and go to state 37
+    FLOAT          shift, and go to state 38
+    NOT_OPERATOR   shift, and go to state 39
+    KEYWORD_TRUE   shift, and go to state 40
+    KEYWORD_FALSE  shift, and go to state 41
+    '-'            shift, and go to state 42
+    '('            shift, and go to state 43
+    '['            shift, and go to state 45
+
+    Expression    go to state 130
+    FunctionCall  go to state 47
+
+
+state 98
+
+   40 AssignmentStatement: IDENTIFIER '=' Expression '?' . Expression ':' Expression
+
+    IDENTIFIER     shift, and go to state 35
+    STRING         shift, and go to state 36
+    INT_CONST      shift, and go to state 37
+    FLOAT          shift, and go to state 38
+    NOT_OPERATOR   shift, and go to state 39
+    KEYWORD_TRUE   shift, and go to state 40
+    KEYWORD_FALSE  shift, and go to state 41
+    '-'            shift, and go to state 42
+    '('            shift, and go to state 43
+    '['            shift, and go to state 45
+
+    Expression    go to state 131
+    FunctionCall  go to state 47
+
+
+state 99
+
+   39 AssignmentStatement: IDENTIFIER '[' Expression ']' . '=' Expression
+
+    '='  shift, and go to state 132
+
+
+state 100
+
+   93 FunctionCall: IDENTIFIER '(' $@8 . ArgList ')'
+
+    IDENTIFIER     shift, and go to state 35
+    STRING         shift, and go to state 36
+    INT_CONST      shift, and go to state 37
+    FLOAT          shift, and go to state 38
+    NOT_OPERATOR   shift, and go to state 39
+    KEYWORD_TRUE   shift, and go to state 40
+    KEYWORD_FALSE  shift, and go to state 41
+    '-'            shift, and go to state 42
+    '('            shift, and go to state 43
+    '['            shift, and go to state 45
+
+    $default  reduce using rule 94 (ArgList)
+
+    Expression    go to state 133
+    FunctionCall  go to state 47
+    ArgList       go to state 134
+    Arguments     go to state 135
+
+
+state 101
+
+   66 Expression: '(' Expression ')' .
+
+    $default  reduce using rule 66 (Expression)
+
+
+state 102
+
+   91 ArrayList: ArrayList ',' . Expression
+
+    IDENTIFIER     shift, and go to state 35
+    STRING         shift, and go to state 36
+    INT_CONST      shift, and go to state 37
+    FLOAT          shift, and go to state 38
+    NOT_OPERATOR   shift, and go to state 39
+    KEYWORD_TRUE   shift, and go to state 40
+    KEYWORD_FALSE  shift, and go to state 41
+    '-'            shift, and go to state 42
+    '('            shift, and go to state 43
+    '['            shift, and go to state 45
+
+    Expression    go to state 136
+    FunctionCall  go to state 47
+
+
+state 103
+
+   88 Expression: '[' ArrayList ']' .
+
+    $default  reduce using rule 88 (Expression)
+
+
+state 104
+
+   79 Expression: Expression OR_OPERATOR M . Expression
+
+    IDENTIFIER     shift, and go to state 35
+    STRING         shift, and go to state 36
+    INT_CONST      shift, and go to state 37
+    FLOAT          shift, and go to state 38
+    NOT_OPERATOR   shift, and go to state 39
+    KEYWORD_TRUE   shift, and go to state 40
+    KEYWORD_FALSE  shift, and go to state 41
+    '-'            shift, and go to state 42
+    '('            shift, and go to state 43
+    '['            shift, and go to state 45
+
+    Expression    go to state 137
+    FunctionCall  go to state 47
+
+
+state 105
+
+   78 Expression: Expression AND_OPERATOR M . Expression
+
+    IDENTIFIER     shift, and go to state 35
+    STRING         shift, and go to state 36
+    INT_CONST      shift, and go to state 37
+    FLOAT          shift, and go to state 38
+    NOT_OPERATOR   shift, and go to state 39
+    KEYWORD_TRUE   shift, and go to state 40
+    KEYWORD_FALSE  shift, and go to state 41
+    '-'            shift, and go to state 42
+    '('            shift, and go to state 43
+    '['            shift, and go to state 45
+
+    Expression    go to state 138
+    FunctionCall  go to state 47
+
+
+state 106
+
+   67 Expression: Expression . '+' Expression
+   68           | Expression . '*' Expression
+   69           | Expression . '-' Expression
+   70           | Expression . '/' Expression
+   71           | Expression . '%' Expression
+   72           | Expression . '>' Expression
+   73           | Expression . '<' Expression
+   74           | Expression . LE Expression
+   75           | Expression . GE Expression
+   76           | Expression . EQUALS Expression
+   76           | Expression EQUALS Expression .
+   77           | Expression . NOT_EQUALS Expression
+   78           | Expression . AND_OPERATOR M Expression
+   79           | Expression . OR_OPERATOR M Expression
+
+    LE   shift, and go to state 74
+    GE   shift, and go to state 75
+    '<'  shift, and go to state 76
+    '>'  shift, and go to state 77
+    '+'  shift, and go to state 78
+    '-'  shift, and go to state 79
+    '*'  shift, and go to state 80
+    '/'  shift, and go to state 81
+    '%'  shift, and go to state 82
+
+    $default  reduce using rule 76 (Expression)
+
+
+state 107
+
+   67 Expression: Expression . '+' Expression
+   68           | Expression . '*' Expression
+   69           | Expression . '-' Expression
+   70           | Expression . '/' Expression
+   71           | Expression . '%' Expression
+   72           | Expression . '>' Expression
+   73           | Expression . '<' Expression
+   74           | Expression . LE Expression
+   75           | Expression . GE Expression
+   76           | Expression . EQUALS Expression
+   77           | Expression . NOT_EQUALS Expression
+   77           | Expression NOT_EQUALS Expression .
+   78           | Expression . AND_OPERATOR M Expression
+   79           | Expression . OR_OPERATOR M Expression
+
+    LE   shift, and go to state 74
+    GE   shift, and go to state 75
+    '<'  shift, and go to state 76
+    '>'  shift, and go to state 77
+    '+'  shift, and go to state 78
+    '-'  shift, and go to state 79
+    '*'  shift, and go to state 80
+    '/'  shift, and go to state 81
+    '%'  shift, and go to state 82
+
+    $default  reduce using rule 77 (Expression)
+
+
+state 108
+
+   67 Expression: Expression . '+' Expression
+   68           | Expression . '*' Expression
+   69           | Expression . '-' Expression
+   70           | Expression . '/' Expression
+   71           | Expression . '%' Expression
+   72           | Expression . '>' Expression
+   73           | Expression . '<' Expression
+   74           | Expression . LE Expression
+   74           | Expression LE Expression .
+   75           | Expression . GE Expression
+   76           | Expression . EQUALS Expression
+   77           | Expression . NOT_EQUALS Expression
+   78           | Expression . AND_OPERATOR M Expression
+   79           | Expression . OR_OPERATOR M Expression
+
+    '+'  shift, and go to state 78
+    '-'  shift, and go to state 79
+    '*'  shift, and go to state 80
+    '/'  shift, and go to state 81
+    '%'  shift, and go to state 82
+
+    $default  reduce using rule 74 (Expression)
+
+
+state 109
+
+   67 Expression: Expression . '+' Expression
+   68           | Expression . '*' Expression
+   69           | Expression . '-' Expression
+   70           | Expression . '/' Expression
+   71           | Expression . '%' Expression
+   72           | Expression . '>' Expression
+   73           | Expression . '<' Expression
+   74           | Expression . LE Expression
+   75           | Expression . GE Expression
+   75           | Expression GE Expression .
+   76           | Expression . EQUALS Expression
+   77           | Expression . NOT_EQUALS Expression
+   78           | Expression . AND_OPERATOR M Expression
+   79           | Expression . OR_OPERATOR M Expression
+
+    '+'  shift, and go to state 78
+    '-'  shift, and go to state 79
+    '*'  shift, and go to state 80
+    '/'  shift, and go to state 81
+    '%'  shift, and go to state 82
+
+    $default  reduce using rule 75 (Expression)
+
+
+state 110
+
+   67 Expression: Expression . '+' Expression
+   68           | Expression . '*' Expression
+   69           | Expression . '-' Expression
+   70           | Expression . '/' Expression
+   71           | Expression . '%' Expression
+   72           | Expression . '>' Expression
+   73           | Expression . '<' Expression
+   73           | Expression '<' Expression .
+   74           | Expression . LE Expression
+   75           | Expression . GE Expression
+   76           | Expression . EQUALS Expression
+   77           | Expression . NOT_EQUALS Expression
+   78           | Expression . AND_OPERATOR M Expression
+   79           | Expression . OR_OPERATOR M Expression
+
+    '+'  shift, and go to state 78
+    '-'  shift, and go to state 79
+    '*'  shift, and go to state 80
+    '/'  shift, and go to state 81
+    '%'  shift, and go to state 82
+
+    $default  reduce using rule 73 (Expression)
+
+
+state 111
+
+   67 Expression: Expression . '+' Expression
+   68           | Expression . '*' Expression
+   69           | Expression . '-' Expression
+   70           | Expression . '/' Expression
+   71           | Expression . '%' Expression
+   72           | Expression . '>' Expression
+   72           | Expression '>' Expression .
+   73           | Expression . '<' Expression
+   74           | Expression . LE Expression
+   75           | Expression . GE Expression
+   76           | Expression . EQUALS Expression
+   77           | Expression . NOT_EQUALS Expression
+   78           | Expression . AND_OPERATOR M Expression
+   79           | Expression . OR_OPERATOR M Expression
+
+    '+'  shift, and go to state 78
+    '-'  shift, and go to state 79
+    '*'  shift, and go to state 80
+    '/'  shift, and go to state 81
+    '%'  shift, and go to state 82
+
+    $default  reduce using rule 72 (Expression)
+
+
+state 112
+
+   67 Expression: Expression . '+' Expression
+   67           | Expression '+' Expression .
+   68           | Expression . '*' Expression
+   69           | Expression . '-' Expression
+   70           | Expression . '/' Expression
+   71           | Expression . '%' Expression
+   72           | Expression . '>' Expression
+   73           | Expression . '<' Expression
+   74           | Expression . LE Expression
+   75           | Expression . GE Expression
+   76           | Expression . EQUALS Expression
+   77           | Expression . NOT_EQUALS Expression
+   78           | Expression . AND_OPERATOR M Expression
+   79           | Expression . OR_OPERATOR M Expression
+
+    '*'  shift, and go to state 80
+    '/'  shift, and go to state 81
+    '%'  shift, and go to state 82
+
+    $default  reduce using rule 67 (Expression)
+
+
+state 113
+
+   67 Expression: Expression . '+' Expression
+   68           | Expression . '*' Expression
+   69           | Expression . '-' Expression
+   69           | Expression '-' Expression .
+   70           | Expression . '/' Expression
+   71           | Expression . '%' Expression
+   72           | Expression . '>' Expression
+   73           | Expression . '<' Expression
+   74           | Expression . LE Expression
+   75           | Expression . GE Expression
+   76           | Expression . EQUALS Expression
+   77           | Expression . NOT_EQUALS Expression
+   78           | Expression . AND_OPERATOR M Expression
+   79           | Expression . OR_OPERATOR M Expression
+
+    '*'  shift, and go to state 80
+    '/'  shift, and go to state 81
+    '%'  shift, and go to state 82
+
+    $default  reduce using rule 69 (Expression)
+
+
+state 114
+
+   67 Expression: Expression . '+' Expression
+   68           | Expression . '*' Expression
+   68           | Expression '*' Expression .
+   69           | Expression . '-' Expression
+   70           | Expression . '/' Expression
+   71           | Expression . '%' Expression
+   72           | Expression . '>' Expression
+   73           | Expression . '<' Expression
+   74           | Expression . LE Expression
+   75           | Expression . GE Expression
+   76           | Expression . EQUALS Expression
+   77           | Expression . NOT_EQUALS Expression
+   78           | Expression . AND_OPERATOR M Expression
+   79           | Expression . OR_OPERATOR M Expression
+
+    $default  reduce using rule 68 (Expression)
+
+
+state 115
+
+   67 Expression: Expression . '+' Expression
+   68           | Expression . '*' Expression
+   69           | Expression . '-' Expression
+   70           | Expression . '/' Expression
+   70           | Expression '/' Expression .
+   71           | Expression . '%' Expression
+   72           | Expression . '>' Expression
+   73           | Expression . '<' Expression
+   74           | Expression . LE Expression
+   75           | Expression . GE Expression
+   76           | Expression . EQUALS Expression
+   77           | Expression . NOT_EQUALS Expression
+   78           | Expression . AND_OPERATOR M Expression
+   79           | Expression . OR_OPERATOR M Expression
+
+    $default  reduce using rule 70 (Expression)
+
+
+state 116
+
+   67 Expression: Expression . '+' Expression
+   68           | Expression . '*' Expression
+   69           | Expression . '-' Expression
+   70           | Expression . '/' Expression
+   71           | Expression . '%' Expression
+   71           | Expression '%' Expression .
+   72           | Expression . '>' Expression
+   73           | Expression . '<' Expression
+   74           | Expression . LE Expression
+   75           | Expression . GE Expression
+   76           | Expression . EQUALS Expression
+   77           | Expression . NOT_EQUALS Expression
+   78           | Expression . AND_OPERATOR M Expression
+   79           | Expression . OR_OPERATOR M Expression
+
+    $default  reduce using rule 71 (Expression)
+
+
+state 117
+
+   32 DeclarationStatement: KEYWORD_VAR DecList IDENTIFIER '@' . Type Assign ';'
+   34 DecList: DecList IDENTIFIER '@' . Type Assign ','
+
+    KEYWORD_FLOAT   shift, and go to state 139
+    KEYWORD_INT     shift, and go to state 140
+    KEYWORD_CHAR    shift, and go to state 141
+    KEYWORD_STRING  shift, and go to state 142
+    KEYWORD_BOOL    shift, and go to state 143
+    INT_ARRAY       shift, and go to state 144
+    FLOAT_ARRAY     shift, and go to state 145
+    CHAR_ARRAY      shift, and go to state 146
+    STRING_ARRAY    shift, and go to state 147
+
+    Type  go to state 148
+
+
+state 118
+
+    6 Element: KEYWORD_FUNCTION IDENTIFIER $@2 '(' . ParametersOption ')' CompoundStatement
+
+    KEYWORD_VAR  shift, and go to state 149
+
+    $default  reduce using rule 8 (ParametersOption)
+
+    ParametersOption  go to state 150
+    Parameters        go to state 151
+
+
+state 119
+
+   47 ConditionStatement: KEYWORD_IF Expression M Statement .
+   49                   | KEYWORD_IF Expression M Statement . KEYWORD_ELSE $@3 M Statement
+
+    KEYWORD_ELSE  shift, and go to state 152
+
+    KEYWORD_ELSE  [reduce using rule 47 (ConditionStatement)]
+    $default      reduce using rule 47 (ConditionStatement)
+
+
+state 120
+
+   51 ConditionStatement: KEYWORD_SWITCH Expression BLOCK_BEGIN $@4 . Cases BLOCK_END
+
+    KEYWORD_CASE  shift, and go to state 153
+
+    Cases  go to state 154
+
+
+state 121
+
+   59 LoopStatement: KEYWORD_DO M Statement KEYWORD_WHILE . M Expression ';'
+
+    $default  reduce using rule 98 (M)
+
+    M  go to state 155
+
+
+state 122
+
+   58 LoopStatement: KEYWORD_WHILE M Expression M . Statement
+
+    IDENTIFIER        shift, and go to state 4
+    KEYWORD_BREAK     shift, and go to state 5
+    KEYWORD_CONTINUE  shift, and go to state 6
+    KEYWORD_RETURN    shift, and go to state 7
+    KEYWORD_VAR       shift, and go to state 8
+    KEYWORD_IF        shift, and go to state 10
+    KEYWORD_SWITCH    shift, and go to state 11
+    KEYWORD_DO        shift, and go to state 12
+    KEYWORD_WHILE     shift, and go to state 13
+    KEYWORD_FOR       shift, and go to state 14
+    BLOCK_BEGIN       shift, and go to state 15
+    KEYWORD_PRINT     shift, and go to state 16
+    KEYWORD_SCAN      shift, and go to state 17
+
+    Statement             go to state 156
+    CompoundStatement     go to state 21
+    DeclarationStatement  go to state 22
+    AssignmentStatement   go to state 23
+    JumpStatement         go to state 24
+    ConditionStatement    go to state 25
+    LoopStatement         go to state 26
+    PrintStatement        go to state 27
+    ScanStatement         go to state 28
+
+
+state 123
+
+   60 LoopStatement: KEYWORD_FOR '(' AssignmentStatement ';' . M Expression ';' M IDENTIFIER INCREMENT ')' Statement
+   61              | KEYWORD_FOR '(' AssignmentStatement ';' . M Expression ';' M IDENTIFIER DECREMENT ')' Statement
+
+    $default  reduce using rule 98 (M)
+
+    M  go to state 157
+
+
+state 124
+
+   31 CompoundStatement: BLOCK_BEGIN Statements M BLOCK_END .
+
+    $default  reduce using rule 31 (CompoundStatement)
+
+
+state 125
+
+   21 Statements: Statement M Statements .
+
+    $default  reduce using rule 21 (Statements)
+
+
+state 126
+
+   63 PrintStatement: KEYWORD_PRINT '(' IDENTIFIER '[' . Expression ']' ')' ';'
+
+    IDENTIFIER     shift, and go to state 35
+    STRING         shift, and go to state 36
+    INT_CONST      shift, and go to state 37
+    FLOAT          shift, and go to state 38
+    NOT_OPERATOR   shift, and go to state 39
+    KEYWORD_TRUE   shift, and go to state 40
+    KEYWORD_FALSE  shift, and go to state 41
+    '-'            shift, and go to state 42
+    '('            shift, and go to state 43
+    '['            shift, and go to state 45
+
+    Expression    go to state 158
+    FunctionCall  go to state 47
+
+
+state 127
+
+   62 PrintStatement: KEYWORD_PRINT '(' Expression ')' . ';'
+
+    ';'  shift, and go to state 159
+
+
+state 128
+
+   65 ScanStatement: KEYWORD_SCAN '(' IDENTIFIER '[' . Expression ']' ')' ';'
+
+    IDENTIFIER     shift, and go to state 35
+    STRING         shift, and go to state 36
+    INT_CONST      shift, and go to state 37
+    FLOAT          shift, and go to state 38
+    NOT_OPERATOR   shift, and go to state 39
+    KEYWORD_TRUE   shift, and go to state 40
+    KEYWORD_FALSE  shift, and go to state 41
+    '-'            shift, and go to state 42
+    '('            shift, and go to state 43
+    '['            shift, and go to state 45
+
+    Expression    go to state 160
+    FunctionCall  go to state 47
+
+
+state 129
+
+   64 ScanStatement: KEYWORD_SCAN '(' Expression ')' . ';'
+
+    ';'  shift, and go to state 161
+
+
+state 130
+
+   38 AssignmentStatement: IDENTIFIER '=' IDENTIFIER '[' Expression . ']'
+   67 Expression: Expression . '+' Expression
+   68           | Expression . '*' Expression
+   69           | Expression . '-' Expression
+   70           | Expression . '/' Expression
+   71           | Expression . '%' Expression
+   72           | Expression . '>' Expression
+   73           | Expression . '<' Expression
+   74           | Expression . LE Expression
+   75           | Expression . GE Expression
+   76           | Expression . EQUALS Expression
+   77           | Expression . NOT_EQUALS Expression
+   78           | Expression . AND_OPERATOR M Expression
+   79           | Expression . OR_OPERATOR M Expression
+
+    OR_OPERATOR   shift, and go to state 70
+    AND_OPERATOR  shift, and go to state 71
+    EQUALS        shift, and go to state 72
+    NOT_EQUALS    shift, and go to state 73
+    LE            shift, and go to state 74
+    GE            shift, and go to state 75
+    '<'           shift, and go to state 76
+    '>'           shift, and go to state 77
+    '+'           shift, and go to state 78
+    '-'           shift, and go to state 79
+    '*'           shift, and go to state 80
+    '/'           shift, and go to state 81
+    '%'           shift, and go to state 82
+    ']'           shift, and go to state 162
+
+
+state 131
+
+   40 AssignmentStatement: IDENTIFIER '=' Expression '?' Expression . ':' Expression
+   67 Expression: Expression . '+' Expression
+   68           | Expression . '*' Expression
+   69           | Expression . '-' Expression
+   70           | Expression . '/' Expression
+   71           | Expression . '%' Expression
+   72           | Expression . '>' Expression
+   73           | Expression . '<' Expression
+   74           | Expression . LE Expression
+   75           | Expression . GE Expression
+   76           | Expression . EQUALS Expression
+   77           | Expression . NOT_EQUALS Expression
+   78           | Expression . AND_OPERATOR M Expression
+   79           | Expression . OR_OPERATOR M Expression
+
+    OR_OPERATOR   shift, and go to state 70
+    AND_OPERATOR  shift, and go to state 71
+    EQUALS        shift, and go to state 72
+    NOT_EQUALS    shift, and go to state 73
+    LE            shift, and go to state 74
+    GE            shift, and go to state 75
+    ':'           shift, and go to state 163
+    '<'           shift, and go to state 76
+    '>'           shift, and go to state 77
+    '+'           shift, and go to state 78
+    '-'           shift, and go to state 79
+    '*'           shift, and go to state 80
+    '/'           shift, and go to state 81
+    '%'           shift, and go to state 82
+
+
+state 132
+
+   39 AssignmentStatement: IDENTIFIER '[' Expression ']' '=' . Expression
+
+    IDENTIFIER     shift, and go to state 35
+    STRING         shift, and go to state 36
+    INT_CONST      shift, and go to state 37
+    FLOAT          shift, and go to state 38
+    NOT_OPERATOR   shift, and go to state 39
+    KEYWORD_TRUE   shift, and go to state 40
+    KEYWORD_FALSE  shift, and go to state 41
+    '-'            shift, and go to state 42
+    '('            shift, and go to state 43
+    '['            shift, and go to state 45
+
+    Expression    go to state 164
+    FunctionCall  go to state 47
+
+
+state 133
+
+   67 Expression: Expression . '+' Expression
+   68           | Expression . '*' Expression
+   69           | Expression . '-' Expression
+   70           | Expression . '/' Expression
+   71           | Expression . '%' Expression
+   72           | Expression . '>' Expression
+   73           | Expression . '<' Expression
+   74           | Expression . LE Expression
+   75           | Expression . GE Expression
+   76           | Expression . EQUALS Expression
+   77           | Expression . NOT_EQUALS Expression
+   78           | Expression . AND_OPERATOR M Expression
+   79           | Expression . OR_OPERATOR M Expression
+   96 Arguments: Expression .
+   97          | Expression . ',' ArgList
+
+    OR_OPERATOR   shift, and go to state 70
+    AND_OPERATOR  shift, and go to state 71
+    EQUALS        shift, and go to state 72
+    NOT_EQUALS    shift, and go to state 73
+    LE            shift, and go to state 74
+    GE            shift, and go to state 75
+    '<'           shift, and go to state 76
+    '>'           shift, and go to state 77
+    '+'           shift, and go to state 78
+    '-'           shift, and go to state 79
+    '*'           shift, and go to state 80
+    '/'           shift, and go to state 81
+    '%'           shift, and go to state 82
+    ','           shift, and go to state 165
+
+    $default  reduce using rule 96 (Arguments)
+
+
+state 134
+
+   93 FunctionCall: IDENTIFIER '(' $@8 ArgList . ')'
+
+    ')'  shift, and go to state 166
+
+
+state 135
+
+   95 ArgList: Arguments .
+
+    $default  reduce using rule 95 (ArgList)
+
+
+state 136
+
+   67 Expression: Expression . '+' Expression
+   68           | Expression . '*' Expression
+   69           | Expression . '-' Expression
+   70           | Expression . '/' Expression
+   71           | Expression . '%' Expression
+   72           | Expression . '>' Expression
+   73           | Expression . '<' Expression
+   74           | Expression . LE Expression
+   75           | Expression . GE Expression
+   76           | Expression . EQUALS Expression
+   77           | Expression . NOT_EQUALS Expression
+   78           | Expression . AND_OPERATOR M Expression
+   79           | Expression . OR_OPERATOR M Expression
+   91 ArrayList: ArrayList ',' Expression .
+
+    OR_OPERATOR   shift, and go to state 70
+    AND_OPERATOR  shift, and go to state 71
+    EQUALS        shift, and go to state 72
+    NOT_EQUALS    shift, and go to state 73
+    LE            shift, and go to state 74
+    GE            shift, and go to state 75
+    '<'           shift, and go to state 76
+    '>'           shift, and go to state 77
+    '+'           shift, and go to state 78
+    '-'           shift, and go to state 79
+    '*'           shift, and go to state 80
+    '/'           shift, and go to state 81
+    '%'           shift, and go to state 82
+
+    $default  reduce using rule 91 (ArrayList)
+
+
+state 137
+
+   67 Expression: Expression . '+' Expression
+   68           | Expression . '*' Expression
+   69           | Expression . '-' Expression
+   70           | Expression . '/' Expression
+   71           | Expression . '%' Expression
+   72           | Expression . '>' Expression
+   73           | Expression . '<' Expression
+   74           | Expression . LE Expression
+   75           | Expression . GE Expression
+   76           | Expression . EQUALS Expression
+   77           | Expression . NOT_EQUALS Expression
+   78           | Expression . AND_OPERATOR M Expression
+   79           | Expression . OR_OPERATOR M Expression
+   79           | Expression OR_OPERATOR M Expression .
+
+    AND_OPERATOR  shift, and go to state 71
+    EQUALS        shift, and go to state 72
+    NOT_EQUALS    shift, and go to state 73
+    LE            shift, and go to state 74
+    GE            shift, and go to state 75
+    '<'           shift, and go to state 76
+    '>'           shift, and go to state 77
+    '+'           shift, and go to state 78
+    '-'           shift, and go to state 79
+    '*'           shift, and go to state 80
+    '/'           shift, and go to state 81
+    '%'           shift, and go to state 82
+
+    $default  reduce using rule 79 (Expression)
+
+
+state 138
+
+   67 Expression: Expression . '+' Expression
+   68           | Expression . '*' Expression
+   69           | Expression . '-' Expression
+   70           | Expression . '/' Expression
+   71           | Expression . '%' Expression
+   72           | Expression . '>' Expression
+   73           | Expression . '<' Expression
+   74           | Expression . LE Expression
+   75           | Expression . GE Expression
+   76           | Expression . EQUALS Expression
+   77           | Expression . NOT_EQUALS Expression
+   78           | Expression . AND_OPERATOR M Expression
+   78           | Expression AND_OPERATOR M Expression .
+   79           | Expression . OR_OPERATOR M Expression
+
+    EQUALS      shift, and go to state 72
+    NOT_EQUALS  shift, and go to state 73
+    LE          shift, and go to state 74
+    GE          shift, and go to state 75
+    '<'         shift, and go to state 76
+    '>'         shift, and go to state 77
+    '+'         shift, and go to state 78
+    '-'         shift, and go to state 79
+    '*'         shift, and go to state 80
+    '/'         shift, and go to state 81
+    '%'         shift, and go to state 82
+
+    $default  reduce using rule 78 (Expression)
+
+
+state 139
+
+   14 Type: KEYWORD_FLOAT .
+
+    $default  reduce using rule 14 (Type)
+
+
+state 140
+
+   12 Type: KEYWORD_INT .
+
+    $default  reduce using rule 12 (Type)
+
+
+state 141
+
+   13 Type: KEYWORD_CHAR .
+
+    $default  reduce using rule 13 (Type)
+
+
+state 142
+
+   15 Type: KEYWORD_STRING .
+
+    $default  reduce using rule 15 (Type)
+
+
+state 143
+
+   16 Type: KEYWORD_BOOL .
+
+    $default  reduce using rule 16 (Type)
+
+
+state 144
+
+   17 Type: INT_ARRAY .
+
+    $default  reduce using rule 17 (Type)
+
+
+state 145
+
+   19 Type: FLOAT_ARRAY .
+
+    $default  reduce using rule 19 (Type)
+
+
+state 146
+
+   18 Type: CHAR_ARRAY .
+
+    $default  reduce using rule 18 (Type)
+
+
+state 147
+
+   20 Type: STRING_ARRAY .
+
+    $default  reduce using rule 20 (Type)
+
+
+state 148
+
+   32 DeclarationStatement: KEYWORD_VAR DecList IDENTIFIER '@' Type . Assign ';'
+   34 DecList: DecList IDENTIFIER '@' Type . Assign ','
+
+    '='  shift, and go to state 167
+
+    $default  reduce using rule 35 (Assign)
+
+    Assign  go to state 168
+
+
+state 149
+
+   10 Parameters: KEYWORD_VAR . IDENTIFIER '@' Type
+
+    IDENTIFIER  shift, and go to state 169
+
+
+state 150
+
+    6 Element: KEYWORD_FUNCTION IDENTIFIER $@2 '(' ParametersOption . ')' CompoundStatement
+
+    ')'  shift, and go to state 170
+
+
+state 151
+
+    9 ParametersOption: Parameters .
+   11 Parameters: Parameters . ',' KEYWORD_VAR IDENTIFIER '@' Type
+
+    ','  shift, and go to state 171
+
+    $default  reduce using rule 9 (ParametersOption)
+
+
+state 152
+
+   49 ConditionStatement: KEYWORD_IF Expression M Statement KEYWORD_ELSE . $@3 M Statement
+
+    $default  reduce using rule 48 ($@3)
+
+    $@3  go to state 172
+
+
+state 153
+
+   55 Cases: KEYWORD_CASE . Expression ':' $@6 Statements
+
+    IDENTIFIER     shift, and go to state 35
+    STRING         shift, and go to state 36
+    INT_CONST      shift, and go to state 37
+    FLOAT          shift, and go to state 38
+    NOT_OPERATOR   shift, and go to state 39
+    KEYWORD_TRUE   shift, and go to state 40
+    KEYWORD_FALSE  shift, and go to state 41
+    '-'            shift, and go to state 42
+    '('            shift, and go to state 43
+    '['            shift, and go to state 45
+
+    Expression    go to state 173
+    FunctionCall  go to state 47
+
+
+state 154
+
+   51 ConditionStatement: KEYWORD_SWITCH Expression BLOCK_BEGIN $@4 Cases . BLOCK_END
+   53 Cases: Cases . KEYWORD_CASE Expression ':' $@5 Statements
+   57      | Cases . KEYWORD_DEFAULT ':' $@7 Statements
+
+    KEYWORD_CASE     shift, and go to state 174
+    KEYWORD_DEFAULT  shift, and go to state 175
+    BLOCK_END        shift, and go to state 176
+
+
+state 155
+
+   59 LoopStatement: KEYWORD_DO M Statement KEYWORD_WHILE M . Expression ';'
+
+    IDENTIFIER     shift, and go to state 35
+    STRING         shift, and go to state 36
+    INT_CONST      shift, and go to state 37
+    FLOAT          shift, and go to state 38
+    NOT_OPERATOR   shift, and go to state 39
+    KEYWORD_TRUE   shift, and go to state 40
+    KEYWORD_FALSE  shift, and go to state 41
+    '-'            shift, and go to state 42
+    '('            shift, and go to state 43
+    '['            shift, and go to state 45
+
+    Expression    go to state 177
+    FunctionCall  go to state 47
+
+
+state 156
+
+   58 LoopStatement: KEYWORD_WHILE M Expression M Statement .
+
+    $default  reduce using rule 58 (LoopStatement)
+
+
+state 157
+
+   60 LoopStatement: KEYWORD_FOR '(' AssignmentStatement ';' M . Expression ';' M IDENTIFIER INCREMENT ')' Statement
+   61              | KEYWORD_FOR '(' AssignmentStatement ';' M . Expression ';' M IDENTIFIER DECREMENT ')' Statement
+
+    IDENTIFIER     shift, and go to state 35
+    STRING         shift, and go to state 36
+    INT_CONST      shift, and go to state 37
+    FLOAT          shift, and go to state 38
+    NOT_OPERATOR   shift, and go to state 39
+    KEYWORD_TRUE   shift, and go to state 40
+    KEYWORD_FALSE  shift, and go to state 41
+    '-'            shift, and go to state 42
+    '('            shift, and go to state 43
+    '['            shift, and go to state 45
+
+    Expression    go to state 178
+    FunctionCall  go to state 47
+
+
+state 158
+
+   63 PrintStatement: KEYWORD_PRINT '(' IDENTIFIER '[' Expression . ']' ')' ';'
+   67 Expression: Expression . '+' Expression
+   68           | Expression . '*' Expression
+   69           | Expression . '-' Expression
+   70           | Expression . '/' Expression
+   71           | Expression . '%' Expression
+   72           | Expression . '>' Expression
+   73           | Expression . '<' Expression
+   74           | Expression . LE Expression
+   75           | Expression . GE Expression
+   76           | Expression . EQUALS Expression
+   77           | Expression . NOT_EQUALS Expression
+   78           | Expression . AND_OPERATOR M Expression
+   79           | Expression . OR_OPERATOR M Expression
+
+    OR_OPERATOR   shift, and go to state 70
+    AND_OPERATOR  shift, and go to state 71
+    EQUALS        shift, and go to state 72
+    NOT_EQUALS    shift, and go to state 73
+    LE            shift, and go to state 74
+    GE            shift, and go to state 75
+    '<'           shift, and go to state 76
+    '>'           shift, and go to state 77
+    '+'           shift, and go to state 78
+    '-'           shift, and go to state 79
+    '*'           shift, and go to state 80
+    '/'           shift, and go to state 81
+    '%'           shift, and go to state 82
+    ']'           shift, and go to state 179
+
+
+state 159
+
+   62 PrintStatement: KEYWORD_PRINT '(' Expression ')' ';' .
+
+    $default  reduce using rule 62 (PrintStatement)
+
+
+state 160
+
+   65 ScanStatement: KEYWORD_SCAN '(' IDENTIFIER '[' Expression . ']' ')' ';'
+   67 Expression: Expression . '+' Expression
+   68           | Expression . '*' Expression
+   69           | Expression . '-' Expression
+   70           | Expression . '/' Expression
+   71           | Expression . '%' Expression
+   72           | Expression . '>' Expression
+   73           | Expression . '<' Expression
+   74           | Expression . LE Expression
+   75           | Expression . GE Expression
+   76           | Expression . EQUALS Expression
+   77           | Expression . NOT_EQUALS Expression
+   78           | Expression . AND_OPERATOR M Expression
+   79           | Expression . OR_OPERATOR M Expression
+
+    OR_OPERATOR   shift, and go to state 70
+    AND_OPERATOR  shift, and go to state 71
+    EQUALS        shift, and go to state 72
+    NOT_EQUALS    shift, and go to state 73
+    LE            shift, and go to state 74
+    GE            shift, and go to state 75
+    '<'           shift, and go to state 76
+    '>'           shift, and go to state 77
+    '+'           shift, and go to state 78
+    '-'           shift, and go to state 79
+    '*'           shift, and go to state 80
+    '/'           shift, and go to state 81
+    '%'           shift, and go to state 82
+    ']'           shift, and go to state 180
+
+
+state 161
+
+   64 ScanStatement: KEYWORD_SCAN '(' Expression ')' ';' .
+
+    $default  reduce using rule 64 (ScanStatement)
+
+
+state 162
+
+   38 AssignmentStatement: IDENTIFIER '=' IDENTIFIER '[' Expression ']' .
+
+    $default  reduce using rule 38 (AssignmentStatement)
+
+
+state 163
+
+   40 AssignmentStatement: IDENTIFIER '=' Expression '?' Expression ':' . Expression
+
+    IDENTIFIER     shift, and go to state 35
+    STRING         shift, and go to state 36
+    INT_CONST      shift, and go to state 37
+    FLOAT          shift, and go to state 38
+    NOT_OPERATOR   shift, and go to state 39
+    KEYWORD_TRUE   shift, and go to state 40
+    KEYWORD_FALSE  shift, and go to state 41
+    '-'            shift, and go to state 42
+    '('            shift, and go to state 43
+    '['            shift, and go to state 45
+
+    Expression    go to state 181
+    FunctionCall  go to state 47
+
+
+state 164
+
+   39 AssignmentStatement: IDENTIFIER '[' Expression ']' '=' Expression .
+   67 Expression: Expression . '+' Expression
+   68           | Expression . '*' Expression
+   69           | Expression . '-' Expression
+   70           | Expression . '/' Expression
+   71           | Expression . '%' Expression
+   72           | Expression . '>' Expression
+   73           | Expression . '<' Expression
+   74           | Expression . LE Expression
+   75           | Expression . GE Expression
+   76           | Expression . EQUALS Expression
+   77           | Expression . NOT_EQUALS Expression
+   78           | Expression . AND_OPERATOR M Expression
+   79           | Expression . OR_OPERATOR M Expression
+
+    OR_OPERATOR   shift, and go to state 70
+    AND_OPERATOR  shift, and go to state 71
+    EQUALS        shift, and go to state 72
+    NOT_EQUALS    shift, and go to state 73
+    LE            shift, and go to state 74
+    GE            shift, and go to state 75
+    '<'           shift, and go to state 76
+    '>'           shift, and go to state 77
+    '+'           shift, and go to state 78
+    '-'           shift, and go to state 79
+    '*'           shift, and go to state 80
+    '/'           shift, and go to state 81
+    '%'           shift, and go to state 82
+
+    $default  reduce using rule 39 (AssignmentStatement)
+
+
+state 165
+
+   97 Arguments: Expression ',' . ArgList
+
+    IDENTIFIER     shift, and go to state 35
+    STRING         shift, and go to state 36
+    INT_CONST      shift, and go to state 37
+    FLOAT          shift, and go to state 38
+    NOT_OPERATOR   shift, and go to state 39
+    KEYWORD_TRUE   shift, and go to state 40
+    KEYWORD_FALSE  shift, and go to state 41
+    '-'            shift, and go to state 42
+    '('            shift, and go to state 43
+    '['            shift, and go to state 45
+
+    $default  reduce using rule 94 (ArgList)
+
+    Expression    go to state 133
+    FunctionCall  go to state 47
+    ArgList       go to state 182
+    Arguments     go to state 135
+
+
+state 166
+
+   93 FunctionCall: IDENTIFIER '(' $@8 ArgList ')' .
+
+    $default  reduce using rule 93 (FunctionCall)
+
+
+state 167
+
+   36 Assign: '=' . Expression
+
+    IDENTIFIER     shift, and go to state 35
+    STRING         shift, and go to state 36
+    INT_CONST      shift, and go to state 37
+    FLOAT          shift, and go to state 38
+    NOT_OPERATOR   shift, and go to state 39
+    KEYWORD_TRUE   shift, and go to state 40
+    KEYWORD_FALSE  shift, and go to state 41
+    '-'            shift, and go to state 42
+    '('            shift, and go to state 43
+    '['            shift, and go to state 45
+
+    Expression    go to state 183
+    FunctionCall  go to state 47
+
+
+state 168
+
+   32 DeclarationStatement: KEYWORD_VAR DecList IDENTIFIER '@' Type Assign . ';'
+   34 DecList: DecList IDENTIFIER '@' Type Assign . ','
+
+    ','  shift, and go to state 184
+    ';'  shift, and go to state 185
+
+
+state 169
+
+   10 Parameters: KEYWORD_VAR IDENTIFIER . '@' Type
+
+    '@'  shift, and go to state 186
+
+
+state 170
+
+    6 Element: KEYWORD_FUNCTION IDENTIFIER $@2 '(' ParametersOption ')' . CompoundStatement
+
+    BLOCK_BEGIN  shift, and go to state 15
+
+    CompoundStatement  go to state 187
+
+
+state 171
+
+   11 Parameters: Parameters ',' . KEYWORD_VAR IDENTIFIER '@' Type
+
+    KEYWORD_VAR  shift, and go to state 188
+
+
+state 172
+
+   49 ConditionStatement: KEYWORD_IF Expression M Statement KEYWORD_ELSE $@3 . M Statement
+
+    $default  reduce using rule 98 (M)
+
+    M  go to state 189
+
+
+state 173
+
+   55 Cases: KEYWORD_CASE Expression . ':' $@6 Statements
+   67 Expression: Expression . '+' Expression
+   68           | Expression . '*' Expression
+   69           | Expression . '-' Expression
+   70           | Expression . '/' Expression
+   71           | Expression . '%' Expression
+   72           | Expression . '>' Expression
+   73           | Expression . '<' Expression
+   74           | Expression . LE Expression
+   75           | Expression . GE Expression
+   76           | Expression . EQUALS Expression
+   77           | Expression . NOT_EQUALS Expression
+   78           | Expression . AND_OPERATOR M Expression
+   79           | Expression . OR_OPERATOR M Expression
+
+    OR_OPERATOR   shift, and go to state 70
+    AND_OPERATOR  shift, and go to state 71
+    EQUALS        shift, and go to state 72
+    NOT_EQUALS    shift, and go to state 73
+    LE            shift, and go to state 74
+    GE            shift, and go to state 75
+    ':'           shift, and go to state 190
+    '<'           shift, and go to state 76
+    '>'           shift, and go to state 77
+    '+'           shift, and go to state 78
+    '-'           shift, and go to state 79
+    '*'           shift, and go to state 80
+    '/'           shift, and go to state 81
+    '%'           shift, and go to state 82
+
+
+state 174
+
+   53 Cases: Cases KEYWORD_CASE . Expression ':' $@5 Statements
+
+    IDENTIFIER     shift, and go to state 35
+    STRING         shift, and go to state 36
+    INT_CONST      shift, and go to state 37
+    FLOAT          shift, and go to state 38
+    NOT_OPERATOR   shift, and go to state 39
+    KEYWORD_TRUE   shift, and go to state 40
+    KEYWORD_FALSE  shift, and go to state 41
+    '-'            shift, and go to state 42
+    '('            shift, and go to state 43
+    '['            shift, and go to state 45
+
+    Expression    go to state 191
+    FunctionCall  go to state 47
+
+
+state 175
+
+   57 Cases: Cases KEYWORD_DEFAULT . ':' $@7 Statements
+
+    ':'  shift, and go to state 192
+
+
+state 176
+
+   51 ConditionStatement: KEYWORD_SWITCH Expression BLOCK_BEGIN $@4 Cases BLOCK_END .
+
+    $default  reduce using rule 51 (ConditionStatement)
+
+
+state 177
+
+   59 LoopStatement: KEYWORD_DO M Statement KEYWORD_WHILE M Expression . ';'
+   67 Expression: Expression . '+' Expression
+   68           | Expression . '*' Expression
+   69           | Expression . '-' Expression
+   70           | Expression . '/' Expression
+   71           | Expression . '%' Expression
+   72           | Expression . '>' Expression
+   73           | Expression . '<' Expression
+   74           | Expression . LE Expression
+   75           | Expression . GE Expression
+   76           | Expression . EQUALS Expression
+   77           | Expression . NOT_EQUALS Expression
+   78           | Expression . AND_OPERATOR M Expression
+   79           | Expression . OR_OPERATOR M Expression
+
+    OR_OPERATOR   shift, and go to state 70
+    AND_OPERATOR  shift, and go to state 71
+    EQUALS        shift, and go to state 72
+    NOT_EQUALS    shift, and go to state 73
+    LE            shift, and go to state 74
+    GE            shift, and go to state 75
+    '<'           shift, and go to state 76
+    '>'           shift, and go to state 77
+    '+'           shift, and go to state 78
+    '-'           shift, and go to state 79
+    '*'           shift, and go to state 80
+    '/'           shift, and go to state 81
+    '%'           shift, and go to state 82
+    ';'           shift, and go to state 193
+
+
+state 178
+
+   60 LoopStatement: KEYWORD_FOR '(' AssignmentStatement ';' M Expression . ';' M IDENTIFIER INCREMENT ')' Statement
+   61              | KEYWORD_FOR '(' AssignmentStatement ';' M Expression . ';' M IDENTIFIER DECREMENT ')' Statement
+   67 Expression: Expression . '+' Expression
+   68           | Expression . '*' Expression
+   69           | Expression . '-' Expression
+   70           | Expression . '/' Expression
+   71           | Expression . '%' Expression
+   72           | Expression . '>' Expression
+   73           | Expression . '<' Expression
+   74           | Expression . LE Expression
+   75           | Expression . GE Expression
+   76           | Expression . EQUALS Expression
+   77           | Expression . NOT_EQUALS Expression
+   78           | Expression . AND_OPERATOR M Expression
+   79           | Expression . OR_OPERATOR M Expression
+
+    OR_OPERATOR   shift, and go to state 70
+    AND_OPERATOR  shift, and go to state 71
+    EQUALS        shift, and go to state 72
+    NOT_EQUALS    shift, and go to state 73
+    LE            shift, and go to state 74
+    GE            shift, and go to state 75
+    '<'           shift, and go to state 76
+    '>'           shift, and go to state 77
+    '+'           shift, and go to state 78
+    '-'           shift, and go to state 79
+    '*'           shift, and go to state 80
+    '/'           shift, and go to state 81
+    '%'           shift, and go to state 82
+    ';'           shift, and go to state 194
+
+
+state 179
+
+   63 PrintStatement: KEYWORD_PRINT '(' IDENTIFIER '[' Expression ']' . ')' ';'
+
+    ')'  shift, and go to state 195
+
+
+state 180
+
+   65 ScanStatement: KEYWORD_SCAN '(' IDENTIFIER '[' Expression ']' . ')' ';'
+
+    ')'  shift, and go to state 196
+
+
+state 181
+
+   40 AssignmentStatement: IDENTIFIER '=' Expression '?' Expression ':' Expression .
+   67 Expression: Expression . '+' Expression
+   68           | Expression . '*' Expression
+   69           | Expression . '-' Expression
+   70           | Expression . '/' Expression
+   71           | Expression . '%' Expression
+   72           | Expression . '>' Expression
+   73           | Expression . '<' Expression
+   74           | Expression . LE Expression
+   75           | Expression . GE Expression
+   76           | Expression . EQUALS Expression
+   77           | Expression . NOT_EQUALS Expression
+   78           | Expression . AND_OPERATOR M Expression
+   79           | Expression . OR_OPERATOR M Expression
+
+    OR_OPERATOR   shift, and go to state 70
+    AND_OPERATOR  shift, and go to state 71
+    EQUALS        shift, and go to state 72
+    NOT_EQUALS    shift, and go to state 73
+    LE            shift, and go to state 74
+    GE            shift, and go to state 75
+    '<'           shift, and go to state 76
+    '>'           shift, and go to state 77
+    '+'           shift, and go to state 78
+    '-'           shift, and go to state 79
+    '*'           shift, and go to state 80
+    '/'           shift, and go to state 81
+    '%'           shift, and go to state 82
+
+    $default  reduce using rule 40 (AssignmentStatement)
+
+
+state 182
+
+   97 Arguments: Expression ',' ArgList .
+
+    $default  reduce using rule 97 (Arguments)
+
+
+state 183
+
+   36 Assign: '=' Expression .
+   67 Expression: Expression . '+' Expression
+   68           | Expression . '*' Expression
+   69           | Expression . '-' Expression
+   70           | Expression . '/' Expression
+   71           | Expression . '%' Expression
+   72           | Expression . '>' Expression
+   73           | Expression . '<' Expression
+   74           | Expression . LE Expression
+   75           | Expression . GE Expression
+   76           | Expression . EQUALS Expression
+   77           | Expression . NOT_EQUALS Expression
+   78           | Expression . AND_OPERATOR M Expression
+   79           | Expression . OR_OPERATOR M Expression
+
+    OR_OPERATOR   shift, and go to state 70
+    AND_OPERATOR  shift, and go to state 71
+    EQUALS        shift, and go to state 72
+    NOT_EQUALS    shift, and go to state 73
+    LE            shift, and go to state 74
+    GE            shift, and go to state 75
+    '<'           shift, and go to state 76
+    '>'           shift, and go to state 77
+    '+'           shift, and go to state 78
+    '-'           shift, and go to state 79
+    '*'           shift, and go to state 80
+    '/'           shift, and go to state 81
+    '%'           shift, and go to state 82
+
+    $default  reduce using rule 36 (Assign)
+
+
+state 184
+
+   34 DecList: DecList IDENTIFIER '@' Type Assign ',' .
+
+    $default  reduce using rule 34 (DecList)
+
+
+state 185
+
+   32 DeclarationStatement: KEYWORD_VAR DecList IDENTIFIER '@' Type Assign ';' .
+
+    $default  reduce using rule 32 (DeclarationStatement)
+
+
+state 186
+
+   10 Parameters: KEYWORD_VAR IDENTIFIER '@' . Type
+
+    KEYWORD_FLOAT   shift, and go to state 139
+    KEYWORD_INT     shift, and go to state 140
+    KEYWORD_CHAR    shift, and go to state 141
+    KEYWORD_STRING  shift, and go to state 142
+    KEYWORD_BOOL    shift, and go to state 143
+    INT_ARRAY       shift, and go to state 144
+    FLOAT_ARRAY     shift, and go to state 145
+    CHAR_ARRAY      shift, and go to state 146
+    STRING_ARRAY    shift, and go to state 147
+
+    Type  go to state 197
+
+
+state 187
+
+    6 Element: KEYWORD_FUNCTION IDENTIFIER $@2 '(' ParametersOption ')' CompoundStatement .
+
+    $default  reduce using rule 6 (Element)
+
+
+state 188
+
+   11 Parameters: Parameters ',' KEYWORD_VAR . IDENTIFIER '@' Type
+
+    IDENTIFIER  shift, and go to state 198
+
+
+state 189
+
+   49 ConditionStatement: KEYWORD_IF Expression M Statement KEYWORD_ELSE $@3 M . Statement
+
+    IDENTIFIER        shift, and go to state 4
+    KEYWORD_BREAK     shift, and go to state 5
+    KEYWORD_CONTINUE  shift, and go to state 6
+    KEYWORD_RETURN    shift, and go to state 7
+    KEYWORD_VAR       shift, and go to state 8
+    KEYWORD_IF        shift, and go to state 10
+    KEYWORD_SWITCH    shift, and go to state 11
+    KEYWORD_DO        shift, and go to state 12
+    KEYWORD_WHILE     shift, and go to state 13
+    KEYWORD_FOR       shift, and go to state 14
+    BLOCK_BEGIN       shift, and go to state 15
+    KEYWORD_PRINT     shift, and go to state 16
+    KEYWORD_SCAN      shift, and go to state 17
+
+    Statement             go to state 199
+    CompoundStatement     go to state 21
+    DeclarationStatement  go to state 22
+    AssignmentStatement   go to state 23
+    JumpStatement         go to state 24
+    ConditionStatement    go to state 25
+    LoopStatement         go to state 26
+    PrintStatement        go to state 27
+    ScanStatement         go to state 28
+
+
+state 190
+
+   55 Cases: KEYWORD_CASE Expression ':' . $@6 Statements
+
+    $default  reduce using rule 54 ($@6)
+
+    $@6  go to state 200
+
+
+state 191
+
+   53 Cases: Cases KEYWORD_CASE Expression . ':' $@5 Statements
+   67 Expression: Expression . '+' Expression
+   68           | Expression . '*' Expression
+   69           | Expression . '-' Expression
+   70           | Expression . '/' Expression
+   71           | Expression . '%' Expression
+   72           | Expression . '>' Expression
+   73           | Expression . '<' Expression
+   74           | Expression . LE Expression
+   75           | Expression . GE Expression
+   76           | Expression . EQUALS Expression
+   77           | Expression . NOT_EQUALS Expression
+   78           | Expression . AND_OPERATOR M Expression
+   79           | Expression . OR_OPERATOR M Expression
+
+    OR_OPERATOR   shift, and go to state 70
+    AND_OPERATOR  shift, and go to state 71
+    EQUALS        shift, and go to state 72
+    NOT_EQUALS    shift, and go to state 73
+    LE            shift, and go to state 74
+    GE            shift, and go to state 75
+    ':'           shift, and go to state 201
+    '<'           shift, and go to state 76
+    '>'           shift, and go to state 77
+    '+'           shift, and go to state 78
+    '-'           shift, and go to state 79
+    '*'           shift, and go to state 80
+    '/'           shift, and go to state 81
+    '%'           shift, and go to state 82
+
+
+state 192
+
+   57 Cases: Cases KEYWORD_DEFAULT ':' . $@7 Statements
+
+    $default  reduce using rule 56 ($@7)
+
+    $@7  go to state 202
+
+
+state 193
+
+   59 LoopStatement: KEYWORD_DO M Statement KEYWORD_WHILE M Expression ';' .
+
+    $default  reduce using rule 59 (LoopStatement)
+
+
+state 194
+
+   60 LoopStatement: KEYWORD_FOR '(' AssignmentStatement ';' M Expression ';' . M IDENTIFIER INCREMENT ')' Statement
+   61              | KEYWORD_FOR '(' AssignmentStatement ';' M Expression ';' . M IDENTIFIER DECREMENT ')' Statement
+
+    $default  reduce using rule 98 (M)
+
+    M  go to state 203
+
+
+state 195
+
+   63 PrintStatement: KEYWORD_PRINT '(' IDENTIFIER '[' Expression ']' ')' . ';'
+
+    ';'  shift, and go to state 204
+
+
+state 196
+
+   65 ScanStatement: KEYWORD_SCAN '(' IDENTIFIER '[' Expression ']' ')' . ';'
+
+    ';'  shift, and go to state 205
+
+
+state 197
+
+   10 Parameters: KEYWORD_VAR IDENTIFIER '@' Type .
+
+    $default  reduce using rule 10 (Parameters)
+
+
+state 198
+
+   11 Parameters: Parameters ',' KEYWORD_VAR IDENTIFIER . '@' Type
+
+    '@'  shift, and go to state 206
+
+
+state 199
+
+   49 ConditionStatement: KEYWORD_IF Expression M Statement KEYWORD_ELSE $@3 M Statement .
+
+    $default  reduce using rule 49 (ConditionStatement)
+
+
+state 200
+
+   55 Cases: KEYWORD_CASE Expression ':' $@6 . Statements
+
+    IDENTIFIER        shift, and go to state 4
+    KEYWORD_BREAK     shift, and go to state 5
+    KEYWORD_CONTINUE  shift, and go to state 6
+    KEYWORD_RETURN    shift, and go to state 7
+    KEYWORD_VAR       shift, and go to state 8
+    KEYWORD_IF        shift, and go to state 10
+    KEYWORD_SWITCH    shift, and go to state 11
+    KEYWORD_DO        shift, and go to state 12
+    KEYWORD_WHILE     shift, and go to state 13
+    KEYWORD_FOR       shift, and go to state 14
+    BLOCK_BEGIN       shift, and go to state 15
+    KEYWORD_PRINT     shift, and go to state 16
+    KEYWORD_SCAN      shift, and go to state 17
+
+    Statements            go to state 207
+    Statement             go to state 56
+    CompoundStatement     go to state 21
+    DeclarationStatement  go to state 22
+    AssignmentStatement   go to state 23
+    JumpStatement         go to state 24
+    ConditionStatement    go to state 25
+    LoopStatement         go to state 26
+    PrintStatement        go to state 27
+    ScanStatement         go to state 28
+
+
+state 201
+
+   53 Cases: Cases KEYWORD_CASE Expression ':' . $@5 Statements
+
+    $default  reduce using rule 52 ($@5)
+
+    $@5  go to state 208
+
+
+state 202
+
+   57 Cases: Cases KEYWORD_DEFAULT ':' $@7 . Statements
+
+    IDENTIFIER        shift, and go to state 4
+    KEYWORD_BREAK     shift, and go to state 5
+    KEYWORD_CONTINUE  shift, and go to state 6
+    KEYWORD_RETURN    shift, and go to state 7
+    KEYWORD_VAR       shift, and go to state 8
+    KEYWORD_IF        shift, and go to state 10
+    KEYWORD_SWITCH    shift, and go to state 11
+    KEYWORD_DO        shift, and go to state 12
+    KEYWORD_WHILE     shift, and go to state 13
+    KEYWORD_FOR       shift, and go to state 14
+    BLOCK_BEGIN       shift, and go to state 15
+    KEYWORD_PRINT     shift, and go to state 16
+    KEYWORD_SCAN      shift, and go to state 17
+
+    Statements            go to state 209
+    Statement             go to state 56
+    CompoundStatement     go to state 21
+    DeclarationStatement  go to state 22
+    AssignmentStatement   go to state 23
+    JumpStatement         go to state 24
+    ConditionStatement    go to state 25
+    LoopStatement         go to state 26
+    PrintStatement        go to state 27
+    ScanStatement         go to state 28
+
+
+state 203
+
+   60 LoopStatement: KEYWORD_FOR '(' AssignmentStatement ';' M Expression ';' M . IDENTIFIER INCREMENT ')' Statement
+   61              | KEYWORD_FOR '(' AssignmentStatement ';' M Expression ';' M . IDENTIFIER DECREMENT ')' Statement
+
+    IDENTIFIER  shift, and go to state 210
+
+
+state 204
+
+   63 PrintStatement: KEYWORD_PRINT '(' IDENTIFIER '[' Expression ']' ')' ';' .
+
+    $default  reduce using rule 63 (PrintStatement)
+
+
+state 205
+
+   65 ScanStatement: KEYWORD_SCAN '(' IDENTIFIER '[' Expression ']' ')' ';' .
+
+    $default  reduce using rule 65 (ScanStatement)
+
+
+state 206
+
+   11 Parameters: Parameters ',' KEYWORD_VAR IDENTIFIER '@' . Type
+
+    KEYWORD_FLOAT   shift, and go to state 139
+    KEYWORD_INT     shift, and go to state 140
+    KEYWORD_CHAR    shift, and go to state 141
+    KEYWORD_STRING  shift, and go to state 142
+    KEYWORD_BOOL    shift, and go to state 143
+    INT_ARRAY       shift, and go to state 144
+    FLOAT_ARRAY     shift, and go to state 145
+    CHAR_ARRAY      shift, and go to state 146
+    STRING_ARRAY    shift, and go to state 147
+
+    Type  go to state 211
+
+
+state 207
+
+   55 Cases: KEYWORD_CASE Expression ':' $@6 Statements .
+
+    $default  reduce using rule 55 (Cases)
+
+
+state 208
+
+   53 Cases: Cases KEYWORD_CASE Expression ':' $@5 . Statements
+
+    IDENTIFIER        shift, and go to state 4
+    KEYWORD_BREAK     shift, and go to state 5
+    KEYWORD_CONTINUE  shift, and go to state 6
+    KEYWORD_RETURN    shift, and go to state 7
+    KEYWORD_VAR       shift, and go to state 8
+    KEYWORD_IF        shift, and go to state 10
+    KEYWORD_SWITCH    shift, and go to state 11
+    KEYWORD_DO        shift, and go to state 12
+    KEYWORD_WHILE     shift, and go to state 13
+    KEYWORD_FOR       shift, and go to state 14
+    BLOCK_BEGIN       shift, and go to state 15
+    KEYWORD_PRINT     shift, and go to state 16
+    KEYWORD_SCAN      shift, and go to state 17
+
+    Statements            go to state 212
+    Statement             go to state 56
+    CompoundStatement     go to state 21
+    DeclarationStatement  go to state 22
+    AssignmentStatement   go to state 23
+    JumpStatement         go to state 24
+    ConditionStatement    go to state 25
+    LoopStatement         go to state 26
+    PrintStatement        go to state 27
+    ScanStatement         go to state 28
+
+
+state 209
+
+   57 Cases: Cases KEYWORD_DEFAULT ':' $@7 Statements .
+
+    $default  reduce using rule 57 (Cases)
+
+
+state 210
+
+   60 LoopStatement: KEYWORD_FOR '(' AssignmentStatement ';' M Expression ';' M IDENTIFIER . INCREMENT ')' Statement
+   61              | KEYWORD_FOR '(' AssignmentStatement ';' M Expression ';' M IDENTIFIER . DECREMENT ')' Statement
+
+    INCREMENT  shift, and go to state 213
+    DECREMENT  shift, and go to state 214
+
+
+state 211
+
+   11 Parameters: Parameters ',' KEYWORD_VAR IDENTIFIER '@' Type .
+
+    $default  reduce using rule 11 (Parameters)
+
+
+state 212
+
+   53 Cases: Cases KEYWORD_CASE Expression ':' $@5 Statements .
+
+    $default  reduce using rule 53 (Cases)
+
+
+state 213
+
+   60 LoopStatement: KEYWORD_FOR '(' AssignmentStatement ';' M Expression ';' M IDENTIFIER INCREMENT . ')' Statement
+
+    ')'  shift, and go to state 215
+
+
+state 214
+
+   61 LoopStatement: KEYWORD_FOR '(' AssignmentStatement ';' M Expression ';' M IDENTIFIER DECREMENT . ')' Statement
+
+    ')'  shift, and go to state 216
+
+
+state 215
+
+   60 LoopStatement: KEYWORD_FOR '(' AssignmentStatement ';' M Expression ';' M IDENTIFIER INCREMENT ')' . Statement
+
+    IDENTIFIER        shift, and go to state 4
+    KEYWORD_BREAK     shift, and go to state 5
+    KEYWORD_CONTINUE  shift, and go to state 6
+    KEYWORD_RETURN    shift, and go to state 7
+    KEYWORD_VAR       shift, and go to state 8
+    KEYWORD_IF        shift, and go to state 10
+    KEYWORD_SWITCH    shift, and go to state 11
+    KEYWORD_DO        shift, and go to state 12
+    KEYWORD_WHILE     shift, and go to state 13
+    KEYWORD_FOR       shift, and go to state 14
+    BLOCK_BEGIN       shift, and go to state 15
+    KEYWORD_PRINT     shift, and go to state 16
+    KEYWORD_SCAN      shift, and go to state 17
+
+    Statement             go to state 217
+    CompoundStatement     go to state 21
+    DeclarationStatement  go to state 22
+    AssignmentStatement   go to state 23
+    JumpStatement         go to state 24
+    ConditionStatement    go to state 25
+    LoopStatement         go to state 26
+    PrintStatement        go to state 27
+    ScanStatement         go to state 28
+
+
+state 216
+
+   61 LoopStatement: KEYWORD_FOR '(' AssignmentStatement ';' M Expression ';' M IDENTIFIER DECREMENT ')' . Statement
+
+    IDENTIFIER        shift, and go to state 4
+    KEYWORD_BREAK     shift, and go to state 5
+    KEYWORD_CONTINUE  shift, and go to state 6
+    KEYWORD_RETURN    shift, and go to state 7
+    KEYWORD_VAR       shift, and go to state 8
+    KEYWORD_IF        shift, and go to state 10
+    KEYWORD_SWITCH    shift, and go to state 11
+    KEYWORD_DO        shift, and go to state 12
+    KEYWORD_WHILE     shift, and go to state 13
+    KEYWORD_FOR       shift, and go to state 14
+    BLOCK_BEGIN       shift, and go to state 15
+    KEYWORD_PRINT     shift, and go to state 16
+    KEYWORD_SCAN      shift, and go to state 17
+
+    Statement             go to state 218
+    CompoundStatement     go to state 21
+    DeclarationStatement  go to state 22
+    AssignmentStatement   go to state 23
+    JumpStatement         go to state 24
+    ConditionStatement    go to state 25
+    LoopStatement         go to state 26
+    PrintStatement        go to state 27
+    ScanStatement         go to state 28
+
+
+state 217
+
+   60 LoopStatement: KEYWORD_FOR '(' AssignmentStatement ';' M Expression ';' M IDENTIFIER INCREMENT ')' Statement .
+
+    $default  reduce using rule 60 (LoopStatement)
+
+
+state 218
+
+   61 LoopStatement: KEYWORD_FOR '(' AssignmentStatement ';' M Expression ';' M IDENTIFIER DECREMENT ')' Statement .
+
+    $default  reduce using rule 61 (LoopStatement)
